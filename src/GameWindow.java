@@ -6,8 +6,8 @@
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class GameWindow extends JFrame {
 
@@ -19,6 +19,7 @@ public class GameWindow extends JFrame {
         GraphicsDevice screenDevice = gEnv.getDefaultScreenDevice();
         this.setUndecorated(true);
         this.setResizable(false);
+        this.setFocusable(false);
         screenDevice.setFullScreenWindow(this);
 
         DisplayMode dm = new DisplayMode(1920, 1080, 32, 60);
@@ -44,24 +45,56 @@ public class GameWindow extends JFrame {
 
         this.add(closeButton, BorderLayout.NORTH);*/
 
+
         this.setVisible(true);
     }
 
-    static class GamePanel extends JPanel {
+
+
+    static class GamePanel extends JPanel  implements KeyListener {
 
         public GamePanel() {
-            setPreferredSize(new Dimension(1920, 1080));
-            setFocusable(true);
-            requestFocusInWindow();
+            this.setPreferredSize(new Dimension(1920, 1080));
+            this.setFocusable(true);
+            this.requestFocusInWindow();
+            this.requestFocus();
+            this.addKeyListener(this);
+
         }
 
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
 
-            System.out.println("Test");
-            g.drawString(System.currentTimeMillis() + "", 100, 100);
+            g.drawString(MainLoop.player.xPos + ", " + MainLoop.player.yPos, 100, 100);
 
-            repaint();
+        }
+
+        public void keyTyped(KeyEvent e) {
+
+        }
+
+        public void keyPressed(KeyEvent e) {
+            if(e.getKeyChar() == 'a' ){
+                MainLoop.player.addXMovemement(-1);
+            } else if(e.getKeyChar() == 'd' ){
+                MainLoop.player.addXMovemement(1);
+            } else if(e.getKeyChar() == 'w' ){
+                MainLoop.player.addYMovemement(-1);
+            } else if(e.getKeyChar() == 's' ){
+                MainLoop.player.addYMovemement(1);
+            }
+        }
+
+        public void keyReleased(KeyEvent e) {
+            if(e.getKeyChar() == 'a' ){
+                MainLoop.player.addXMovemement(1);
+            } else if(e.getKeyChar() == 'd' ){
+                MainLoop.player.addXMovemement(-1);
+            } else if(e.getKeyChar() == 'w' ){
+                MainLoop.player.addYMovemement(1);
+            } else if(e.getKeyChar() == 's' ){
+                MainLoop.player.addYMovemement(-1);
+            }
         }
     }
 }
