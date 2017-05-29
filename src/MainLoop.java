@@ -6,11 +6,19 @@ public class MainLoop {
     private static final int MAX_FRAMES = 60;
     private static long lastFrame = 0;
 
+    //Config values
+    //TODO: Move into custom file
+    private static final int PLAYER_SPEED = 5; //Pixels the player moves every frame
+
+    public static Player player;
+
     public static void main(String[] args) {
 
         //TODO: Launch start screen here
 
-        //TODO: Initialize game frame
+        //Make a new instance of Player
+        player = new Player();
+
         JFrame gameWindow = new GameWindow();
         //Main game loop starts here
         do {
@@ -25,9 +33,17 @@ public class MainLoop {
                     System.exit(1);
                 }
             }
-            //gameWindow.repaint();
+
+            //Move the player
+            player.xPos += player.getXMovement();
+            player.yPos += player.getYMovement();
+
+            //This happens last to ensure we're measuring the time taken by *everything*
+            gameWindow.repaint();
             lastFrame = System.currentTimeMillis();
-            System.out.println("Drawing something at " + System.currentTimeMillis());
-        } while (true);
+            //NO MORE CODE BEYOND THIS POINT
+            //ALL CODE WILL BE DESTROYED ON SIGHT
+        } while (true); // this lil guy gets an exception though because he appeases the compiler for now
     }
+
 }
