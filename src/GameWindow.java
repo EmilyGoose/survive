@@ -8,6 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class GameWindow extends JFrame {
 
@@ -64,6 +66,14 @@ public class GameWindow extends JFrame {
 
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
+
+            //Declare a variable to be initialized later
+            GameObject currentItem;
+
+            //Iterate through the world's ArrayList
+            for (int i = 0; i < MainLoop.world.getArraySize(); i ++) {
+                //TODO: This
+            }
 
             g.drawString(MainLoop.player.xPos + ", " + MainLoop.player.yPos, 100, 100);
 

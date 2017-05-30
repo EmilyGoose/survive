@@ -10,7 +10,9 @@ public class MainLoop {
     //TODO: Move into custom file
     private static final int PLAYER_SPEED = 5; //Pixels the player moves every frame
 
+    //Important game thingies there are only one of
     public static Player player;
+    public static GameWorld world;
 
     public static void main(String[] args) {
 
@@ -18,6 +20,9 @@ public class MainLoop {
 
         //Make a new instance of Player
         player = new Player();
+
+        //Make the new world
+        world = new GameWorld();
 
         JFrame gameWindow = new GameWindow();
         //Main game loop starts here
