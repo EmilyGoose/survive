@@ -4,12 +4,12 @@
  * Misha Larionov
  */
 
-import java.awt.*;
+import java.awt.Rectangle;
 
 public class GameObject {
     public int xPos;
     public int yPos;
-    private int imageID; //TODO: Images!
+    private String imageName;
     public Rectangle mouseHitbox;
     public Rectangle movementHitbox;
 
@@ -21,5 +21,13 @@ public class GameObject {
     GameObject (int x, int y) {
         this.xPos = x;
         this.yPos = y;
+    }
+
+    public String getImageName() {
+        return this.imageName;
+    }
+
+    public void setImageName(String name) {
+        this.imageName = name;
     }
 }
