@@ -23,6 +23,7 @@ public class Player extends GameObject {
         this.hunger = 100;
         this.warmth = 100;
         this.inventory = new Inventory();
+        this.setImageName("player");
     }
 
     //Hunger-related functions

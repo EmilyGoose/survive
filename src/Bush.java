@@ -11,11 +11,13 @@ public class Bush extends GameObject implements ResourceGenerator{
     Bush() {
         super(2500, 2500);
         this.full = true;
+        this.setImageName("bush");
     }
 
     Bush(int x, int y) {
         super(x, y);
         this.full = true;
+        this.setImageName("bush");
     }
 
     public boolean hasResource() {

@@ -72,7 +72,8 @@ public class GameWindow extends JFrame {
 
             //Iterate through the world's ArrayList
             for (int i = 0; i < MainLoop.world.getArraySize(); i ++) {
-                //TODO: This
+                //Figure out if the object is on the screen
+                //The player
             }
 
             g.drawString(MainLoop.player.xPos + ", " + MainLoop.player.yPos, 100, 100);
