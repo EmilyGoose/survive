@@ -79,16 +79,29 @@ public class GameWindow extends JFrame {
             int objectY;
             int objectHeight;
 
+            int worldX = 935 - Game.player.xPos;
+            int worldY = 490 - Game.player.yPos;
 
             //Iterate through the world's ArrayList
             for (int i = 0; i < Game.world.getArraySize(); i ++) {
                 //The player is 50 * 100 and their position is their bottom center
                 //Find the position relative to the player, who is always drawn at 935, 490 but is positioned at 960, 590
+                //Every GameObject is positioned at the bottom center because of the perspective
                 object = Game.world.getItemAtIndex(i);
                 objectImage = Game.images.getImage(object.getImageName());
+                objectWidth = objectImage.getWidth(this);
+                objectHeight = objectImage.getHeight(this);
+
+                //Find where it should be drawn
+                objectX = (object.xPos - objectWidth / 2) + worldX;
+                objectY = (object.yPos - objectHeight) + worldY;
+
+                //Draw the object
+                g.drawImage(objectImage, objectX, objectY, this);
+
 
             }
-            g.drawRect(960, 590, 1, 1);
+
             g.drawImage(Game.images.getImage("player"), 960-25, 540-50, this);
             g.drawString(playerX + ", " + playerY, 100, 100);
 
