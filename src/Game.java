@@ -1,6 +1,6 @@
 import javax.swing.*;
 
-public class MainLoop {
+public class Game {
 
     //Framerate-related variables
     private static final int MAX_FRAMES = 60;
@@ -13,16 +13,22 @@ public class MainLoop {
     //Important game thingies there are only one of
     public static Player player;
     public static GameWorld world;
+    public static ImageLoader images;
 
     public static void main(String[] args) {
 
         //TODO: Launch start screen here
+
+        //Load the images
+        images = new ImageLoader();
 
         //Make a new instance of Player
         player = new Player();
 
         //Make the new world
         world = new GameWorld();
+
+        while(!(images.isReady())) {} //IntelliJ says this is confusing but whatever
 
         JFrame gameWindow = new GameWindow();
         //Main game loop starts here

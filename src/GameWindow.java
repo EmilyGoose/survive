@@ -8,8 +8,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 
 public class GameWindow extends JFrame {
 
@@ -61,7 +59,7 @@ public class GameWindow extends JFrame {
             this.requestFocusInWindow();
             this.requestFocus();
             this.addKeyListener(this);
-
+            //TODO: Change focus so ALT-TAB isn't required first to move the player
         }
 
         public void paintComponent(Graphics g) {
@@ -70,13 +68,29 @@ public class GameWindow extends JFrame {
             //Declare a variable to be initialized later
             GameObject currentItem;
 
-            //Iterate through the world's ArrayList
-            for (int i = 0; i < MainLoop.world.getArraySize(); i ++) {
-                //Figure out if the object is on the screen
-                //The player
-            }
+            int playerX = Game.player.xPos;
+            int playerY = Game.player.yPos;
 
-            g.drawString(MainLoop.player.xPos + ", " + MainLoop.player.yPos, 100, 100);
+            //Variables for current check
+            GameObject object;
+            Image objectImage;
+            int objectX;
+            int objectWidth;
+            int objectY;
+            int objectHeight;
+
+
+            //Iterate through the world's ArrayList
+            for (int i = 0; i < Game.world.getArraySize(); i ++) {
+                //The player is 50 * 100 and their position is their bottom center
+                //Find the position relative to the player, who is always drawn at 935, 490 but is positioned at 960, 590
+                object = Game.world.getItemAtIndex(i);
+                objectImage = Game.images.getImage(object.getImageName());
+
+            }
+            g.drawRect(960, 590, 1, 1);
+            g.drawImage(Game.images.getImage("player"), 960-25, 540-50, this);
+            g.drawString(playerX + ", " + playerY, 100, 100);
 
         }
 
@@ -86,25 +100,25 @@ public class GameWindow extends JFrame {
 
         public void keyPressed(KeyEvent e) {
             if(e.getKeyChar() == 'a' ){
-                MainLoop.player.addXMovemement(-1);
+                Game.player.addXMovemement(-1);
             } else if(e.getKeyChar() == 'd' ){
-                MainLoop.player.addXMovemement(1);
+                Game.player.addXMovemement(1);
             } else if(e.getKeyChar() == 'w' ){
-                MainLoop.player.addYMovemement(-1);
+                Game.player.addYMovemement(-1);
             } else if(e.getKeyChar() == 's' ){
-                MainLoop.player.addYMovemement(1);
+                Game.player.addYMovemement(1);
             }
         }
 
         public void keyReleased(KeyEvent e) {
             if(e.getKeyChar() == 'a' ){
-                MainLoop.player.addXMovemement(1);
+                Game.player.addXMovemement(1);
             } else if(e.getKeyChar() == 'd' ){
-                MainLoop.player.addXMovemement(-1);
+                Game.player.addXMovemement(-1);
             } else if(e.getKeyChar() == 'w' ){
-                MainLoop.player.addYMovemement(1);
+                Game.player.addYMovemement(1);
             } else if(e.getKeyChar() == 's' ){
-                MainLoop.player.addYMovemement(-1);
+                Game.player.addYMovemement(-1);
             }
         }
     }
