@@ -23,8 +23,9 @@ public class ImageLoader {
             while (input.hasNext()) {
                 String[] line = input.nextLine().split("//");
                 try {
-                    images.put(line[1], Toolkit.getDefaultToolkit().getImage("res/" + line[1]));
+                    images.put(line[0], Toolkit.getDefaultToolkit().getImage("res/" + line[1]));
                     this.imagesLoaded += 1;
+                    System.out.println(line[0] + " (" + line[1] + ") loaded");
                 } catch (Exception E) {
                     //File doesn't exist
                     System.out.println(line[1] + " could not be loaded");
