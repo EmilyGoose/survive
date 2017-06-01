@@ -46,8 +46,8 @@ public class Game {
             }
 
             //Move the player
-            player.xPos += player.getXMovement();
-            player.yPos += player.getYMovement();
+            player.xPos += (player.getXMovement() * player.getSpeed());
+            player.yPos += (player.getYMovement() * player.getSpeed());
 
             //This happens last to ensure we're measuring the time taken by *everything*
             gameWindow.repaint();

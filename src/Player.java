@@ -8,6 +8,7 @@ public class Player extends GameObject {
     private int health;
     private int hunger;
     private int warmth;
+    private int speed = 5;
     private Inventory inventory;
 
     private int xMovement = 0;
@@ -82,5 +83,12 @@ public class Player extends GameObject {
         return this.yMovement;
     }
 
+    public int getSpeed() {
+        return this.speed;
+    }
+
+    public void setSpeed(int newSpeed) {
+        this.speed = newSpeed;
+    }
 
 }

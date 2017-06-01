@@ -13,6 +13,8 @@ public class GameWorld {
 
     GameWorld() {
         worldItems = new ArrayList<GameObject>(0);
+        worldItems.add(new Bush(2200, 2200));
+        worldItems.add(new Bush(2650, 2400));
     }
 
     public GameObject getItemAtIndex(int i) {
