@@ -27,7 +27,14 @@ public class GameWindow extends JFrame {
         setSize(new Dimension(dm.getWidth(), dm.getHeight()));
         validate();
 
-        getContentPane().add( new GamePanel());
+        GamePanel gamePanel = new GamePanel();
+
+        this.setFocusable(true);
+        this.requestFocusInWindow();
+        this.requestFocus();
+        this.addKeyListener(gamePanel);
+
+        getContentPane().add(gamePanel);
         pack(); //makes the frame fit the contents
 
         /*JButton closeButton = new JButton("EXIT");
@@ -55,10 +62,7 @@ public class GameWindow extends JFrame {
 
         public GamePanel() {
             this.setPreferredSize(new Dimension(1920, 1080));
-            this.setFocusable(true);
-            this.requestFocusInWindow();
-            this.requestFocus();
-            this.addKeyListener(this);
+
             //TODO: Change focus so ALT-TAB isn't required first to move the player
         }
 
