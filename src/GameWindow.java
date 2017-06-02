@@ -96,10 +96,14 @@ public class GameWindow extends JFrame {
                 objectX = (object.xPos - objectWidth / 2) + worldX;
                 objectY = (object.yPos - objectHeight) + worldY;
 
+                //Create the mouse collision rectangle for the object
+                object.mouseHitbox = new Rectangle(objectX, objectY, objectWidth, objectHeight);
+
+                //Create the 4x4 player collision rectangle for the object
+                object.movementHitbox = new Rectangle(object.xPos - 2, object.yPos - 2, 4 ,4);
+
                 //Draw the object
                 g.drawImage(objectImage, objectX, objectY, this);
-
-
             }
 
             g.drawImage(Game.images.getImage("player"), 960-25, 540-50, this);
