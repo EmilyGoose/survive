@@ -1,14 +1,11 @@
 import javax.swing.*;
+import java.awt.*;
 
 public class Game {
 
     //Framerate-related variables
     private static final int MAX_FRAMES = 60;
     private static long lastFrame = 0;
-
-    //Config values
-    //TODO: Move into custom file
-    private static final int PLAYER_SPEED = 5; //Pixels the player moves every frame
 
     //Important game thingies there are only one of
     public static Player player;
@@ -28,6 +25,7 @@ public class Game {
         //Make the new world
         world = new GameWorld();
 
+        //TODO: Progress bar
         while(!(images.isReady())) {} //IntelliJ says this is confusing but whatever
 
         JFrame gameWindow = new GameWindow();
@@ -44,6 +42,17 @@ public class Game {
                     System.exit(1);
                 }
             }
+
+            //Get the mouse position
+            PointerInfo a = MouseInfo.getPointerInfo();
+            Point b  = a.getLocation();
+            int mouseX = (int)(b.getX());
+            int mouseY = (int)(b.getY());
+
+            //Make a new rectangle representing the mouse
+            Rectangle mouseRectangle = new Rectangle(mouseX - 2, mouseY - 2, 4, 4);
+
+            //TODO: Iterate through all the world objects and check if the mouse is intersecting
 
             //Move the player
             player.xPos += (player.getXMovement() * player.getSpeed());
