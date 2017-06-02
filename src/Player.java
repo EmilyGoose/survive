@@ -14,9 +14,8 @@ public class Player extends GameObject {
     private int xMovement = 0;
     private int yMovement = 0;
 
-    //TODO: Uncomment once implemented
-    //private GameObject cursorItem; //TODO: Tool interface
-    //private GameObject equippedTool; //TODO: GameObject class
+    private GameObject cursorItem;
+    private GameObject equippedTool; //TODO: Tool interface
 
     Player() {
         super(2500, 2500);
