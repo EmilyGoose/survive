@@ -4,10 +4,14 @@
  * Misha Larionov
  */
 
+import org.w3c.dom.events.MouseEvent;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
+//import java.net.URL;
 
 public class GameWindow extends JFrame {
 
@@ -33,6 +37,7 @@ public class GameWindow extends JFrame {
         this.requestFocusInWindow();
         this.requestFocus();
         this.addKeyListener(gamePanel);
+        this.addMouseListener(gamePanel);
 
         getContentPane().add(gamePanel);
         pack(); //makes the frame fit the contents
@@ -58,10 +63,21 @@ public class GameWindow extends JFrame {
 
 
 
-    static class GamePanel extends JPanel  implements KeyListener {
+    static class GamePanel extends JPanel  implements KeyListener, MouseListener {
 
         public GamePanel() {
             this.setPreferredSize(new Dimension(1920, 1080));
+
+            //Font loading code for later use
+//            try {
+//                URL fontUrl = new URL("https://fonts.gstatic.com/s/productsans/v9/HYvgU2fE2nRJvZ5JFAumwZS3E-kSBmtLoNJPDtbj2Pk.ttf");
+//                Font font = Font.createFont(Font.TRUETYPE_FONT, fontUrl.openStream());
+//                font = font.deriveFont(Font.PLAIN,20);
+//                GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+//                ge.registerFont(font);
+//            } catch (Exception e) {
+//                System.out.println("Could not load font");
+//            }
 
             //TODO: Change focus so ALT-TAB isn't required first to move the player
         }
@@ -74,6 +90,15 @@ public class GameWindow extends JFrame {
 
             int playerX = Game.player.xPos;
             int playerY = Game.player.yPos;
+
+            //Get the mouse position
+            PointerInfo a = MouseInfo.getPointerInfo();
+            Point b  = a.getLocation();
+            int mouseX = (int)(b.getX());
+            int mouseY = (int)(b.getY());
+
+            //Make a new rectangle representing the mouse
+            Rectangle mouseRectangle = new Rectangle(mouseX - 2, mouseY - 2, 4, 4);
 
             //Variables for current check
             GameObject object;
@@ -106,6 +131,11 @@ public class GameWindow extends JFrame {
                 //Create the 4x4 player collision rectangle for the object
                 object.movementHitbox = new Rectangle(object.xPos - 2, object.yPos - 2, 4 ,4);
 
+                //Check to see if the mouse is intersecting
+                if (object.mouseHitbox.intersects(mouseRectangle)) {
+                    Game.actionableObject = object;
+                }
+
                 //Draw the object
                 g.drawImage(objectImage, objectX, objectY, this);
             }
@@ -115,9 +145,7 @@ public class GameWindow extends JFrame {
 
         }
 
-        public void keyTyped(KeyEvent e) {
-
-        }
+        public void keyTyped(KeyEvent e) {}
 
         public void keyPressed(KeyEvent e) {
             if(e.getKeyChar() == 'a' ){
@@ -141,6 +169,26 @@ public class GameWindow extends JFrame {
             } else if(e.getKeyChar() == 's' ){
                 Game.player.addYMovemement(-1);
             }
+        }
+
+        public void mouseClicked(java.awt.event.MouseEvent e) {
+            Game.mouseClick = true;
+        }
+
+        public void mousePressed(java.awt.event.MouseEvent e) {
+
+        }
+
+        public void mouseReleased(java.awt.event.MouseEvent e) {
+
+        }
+
+        public void mouseEntered(java.awt.event.MouseEvent e) {
+
+        }
+
+        public void mouseExited(java.awt.event.MouseEvent e) {
+
         }
     }
 }

@@ -11,6 +11,9 @@ public class Game {
     public static Player player;
     public static GameWorld world;
     public static ImageLoader images;
+    public static GameObject actionableObject; //Object that the mouse is over
+    public static boolean mouseClick; //Whether there's a new mouse click to process
+
 
     public static void main(String[] args) {
 
@@ -43,16 +46,9 @@ public class Game {
                 }
             }
 
-            //Get the mouse position
-            PointerInfo a = MouseInfo.getPointerInfo();
-            Point b  = a.getLocation();
-            int mouseX = (int)(b.getX());
-            int mouseY = (int)(b.getY());
-
-            //Make a new rectangle representing the mouse
-            Rectangle mouseRectangle = new Rectangle(mouseX - 2, mouseY - 2, 4, 4);
-
-            //TODO: Iterate through all the world objects and check if the mouse is intersecting
+            if (Game.mouseClick && (Game.actionableObject != null)) {
+                //TODO: Perform the requisite action
+            }
 
             //Move the player
             player.xPos += (player.getXMovement() * player.getSpeed());
