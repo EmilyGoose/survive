@@ -127,9 +127,11 @@ public class GameWindow extends JFrame {
 
                 //Create the mouse collision rectangle for the object
                 object.mouseHitbox = new Rectangle(objectX, objectY, objectWidth, objectHeight);
+                g.drawRect(objectX, objectY, objectWidth, objectHeight); //DEBUG
 
-                //Create the 4x4 player collision rectangle for the object
+                //Create the 4x4 player collision rectangle for the object //TODO: Fix
                 object.movementHitbox = new Rectangle(object.xPos - 2, object.yPos - 2, 4 ,4);
+                g.drawRect(object.xPos - 2, object.yPos - 2, 4 ,4); //DEBUG
 
                 //Check to see if the mouse is intersecting
                 if (object.mouseHitbox.intersects(mouseRectangle)) {
@@ -151,15 +153,12 @@ public class GameWindow extends JFrame {
 
             //debug
             g.drawString(playerX + ", " + playerY, 100, 100); //TODO: Remove once no longer required for debug
-            g.drawString(Game.player.getXMovement() + " , " + Game.player.getYMovement(), 100, 120);
-            g.drawString(Game.player.getSpeed() + "", 100, 140);
 
         }
 
         public void keyTyped(KeyEvent e) {}
 
         public void keyPressed(KeyEvent e) {
-            System.out.println(e.getKeyChar() + " pressed");
             if(e.getKeyChar() == 'a' ){
                 Game.player.addXMovemement(-1);
             } else if(e.getKeyChar() == 'd' ){
@@ -172,7 +171,6 @@ public class GameWindow extends JFrame {
         }
 
         public void keyReleased(KeyEvent e) {
-            System.out.println(e.getKeyChar() + " released");
             if(e.getKeyChar() == 'a' ){
                 Game.player.addXMovemement(1);
             } else if(e.getKeyChar() == 'd' ){
