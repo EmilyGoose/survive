@@ -30,7 +30,7 @@ public class GameWorld {
     }
 
     public boolean addItem(GameObject item) {
-        if (worldItems.indexOf(item) > -1) { //Make sure the element exists in the array
+        if (worldItems.indexOf(item) == -1) { //Make sure the element doesn't exist in the array
             worldItems.add(item);
             return true; //Return true to indicate that the item was added successfully
         } else {

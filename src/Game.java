@@ -63,9 +63,18 @@ public class Game {
                     Game.actionableObject = null;
                 }
 
-                //We no longer need to perform the click action
-                Game.mouseClick = false;
-            }// else if (Game.mouseClick)
+            } else if (Game.mouseClick && (Game.player.cursorItem != null)) { //Runs if mouse is not over anything but there's a cursor
+                Game.player.cursorItem.xPos = 2500;
+                Game.player.cursorItem.yPos = 2500;
+                Game.world.addItem(Game.player.cursorItem);
+                System.out.println(Game.world.getItemAtIndex(2));
+                Game.player.cursorItem = null;
+                System.out.println(Game.world.getItemAtIndex(2));
+            }
+
+            //We no longer need to handle the click action or care about what's under the mouse
+            Game.mouseClick = false;
+            Game.actionableObject = null;
 
             //Move the player
             player.xPos += (player.getXMovement() * player.getSpeed());
