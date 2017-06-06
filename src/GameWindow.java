@@ -140,14 +140,26 @@ public class GameWindow extends JFrame {
                 g.drawImage(objectImage, objectX, objectY, this);
             }
 
+            //Draw the player
             g.drawImage(Game.images.getImage("player"), 960-25, 540-50, this);
-            g.drawString(playerX + ", " + playerY, 100, 100);
+
+            //Draw the item the player's holding in the cursor
+            if(Game.player.cursorItem != null) {
+                Image cursorItemImage = Game.images.getImage(Game.player.cursorItem.getImageName());
+                g.drawImage(cursorItemImage, mouseX - 10, mouseY - 10, this);
+            }
+
+            //debug
+            g.drawString(playerX + ", " + playerY, 100, 100); //TODO: Remove once no longer required for debug
+            g.drawString(Game.player.getXMovement() + " , " + Game.player.getYMovement(), 100, 120);
+            g.drawString(Game.player.getSpeed() + "", 100, 140);
 
         }
 
         public void keyTyped(KeyEvent e) {}
 
         public void keyPressed(KeyEvent e) {
+            System.out.println(e.getKeyChar() + " pressed");
             if(e.getKeyChar() == 'a' ){
                 Game.player.addXMovemement(-1);
             } else if(e.getKeyChar() == 'd' ){
@@ -160,6 +172,7 @@ public class GameWindow extends JFrame {
         }
 
         public void keyReleased(KeyEvent e) {
+            System.out.println(e.getKeyChar() + " released");
             if(e.getKeyChar() == 'a' ){
                 Game.player.addXMovemement(1);
             } else if(e.getKeyChar() == 'd' ){

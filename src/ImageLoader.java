@@ -3,6 +3,7 @@
  * Basically a container class for a hash table with image IDs
  */
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.*; // S T A R I M P O R T S
 import java.util.Hashtable;
@@ -18,22 +19,25 @@ public class ImageLoader {
 
     ImageLoader() {
         try {
-            File f = new File("res/ImageLoadList.txt");
-            Scanner input = new Scanner(f);
+            Scanner input = new Scanner(new File("res/ImageLoadList.txt"));
             while (input.hasNext()) {
                 String[] line = input.nextLine().split("//");
                 try {
-                    images.put(line[0], Toolkit.getDefaultToolkit().getImage("res/" + line[1]));
+                    //Try to load the image
+                    ImageIO.read(new File("res/" + line[1]));
+                    images.put(line[0], ImageIO.read(new File("res/" + line[1])));
                     this.imagesLoaded += 1;
                     System.out.println(line[0] + " (" + line[1] + ") loaded");
-                } catch (Exception E) {
+                } catch (Exception e) {
                     //File doesn't exist
-                    System.out.println(line[1] + " could not be loaded");
+                    System.out.println(line[1] + " failed to load");
                 }
             }
         } catch (Exception E){
-            System.out.println("Images could not be loaded! Using placeholder...");
+            System.out.println("Image load list could not be found! Cannot proceed.");
+            System.exit(1);
         }
+
         this.ready = true;
     }
 
