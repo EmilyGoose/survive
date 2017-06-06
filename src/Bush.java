@@ -24,12 +24,12 @@ public class Bush extends GameObject implements ResourceGenerator{
         return this.full;
     }
 
-    public boolean pick() {
+    public InventoryObject pick() {
         if (this.full) {
             this.full = false;
-            return true;
+            return new Berry();
         } else {
-            return false;
+            return null;
         }
     }
 

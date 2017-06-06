@@ -22,12 +22,12 @@ public class Sapling extends GameObject implements ResourceGenerator{
         return this.full;
     }
 
-    public boolean pick() {
+    public InventoryObject pick() {
         if (this.full) {
             this.full = false;
-            return true;
+            return null; //TODO: Stick
         } else {
-            return false;
+            return null;
         }
     }
 

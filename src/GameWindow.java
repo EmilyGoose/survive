@@ -140,6 +140,11 @@ public class GameWindow extends JFrame {
 
                 //Draw the object
                 g.drawImage(objectImage, objectX, objectY, this);
+
+                //Extra step for berries on a bush
+                if (object instanceof Bush && ((Bush)object).hasResource()) {
+                    g.drawImage(Game.images.getImage("bushberry"), objectX, objectY, this);
+                }
             }
 
             //Draw the player

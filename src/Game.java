@@ -58,9 +58,14 @@ public class Game {
             if (Game.mouseClick && (Game.actionableObject != null)) {
                 //Pick up random items lying on the ground
                 if (Game.actionableObject instanceof InventoryObject) {
+                    //Transfer the item to the cursor
                     player.cursorItem = Game.actionableObject;
+                    //Clear the item from the world
                     Game.world.removeItem(Game.actionableObject);
                     Game.actionableObject = null;
+                } else if (Game.actionableObject instanceof Bush && ((Bush)Game.actionableObject).hasResource()) {
+                    //Pick the berry from the bush (No checks needed, returns null if empty)
+                    player.cursorItem = ((Bush)Game.actionableObject).pick();
                 }
 
             } else if (Game.mouseClick && (Game.player.cursorItem != null)) { //Runs if mouse is not over anything but there's a cursor

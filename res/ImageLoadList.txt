@@ -2,3 +2,4 @@ player//person_placeholder.png
 tree//tree_placeholder.png
 bush//bush_placeholder.png
 berry//berries_placeholder.png
+bushberry//bushberries.png
