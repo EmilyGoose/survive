@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 
 public class Game {
@@ -57,24 +58,36 @@ public class Game {
 
             if (Game.mouseClick && (Game.actionableObject != null)) {
                 //Pick up random items lying on the ground
-                if (Game.actionableObject instanceof InventoryObject) {
+                if (Game.actionableObject instanceof InventoryObject && Game.player.cursorItem == null) {
                     //Transfer the item to the cursor
-                    player.cursorItem = Game.actionableObject;
+                    Game.player.cursorItem = Game.actionableObject;
                     //Clear the item from the world
                     Game.world.removeItem(Game.actionableObject);
                     Game.actionableObject = null;
                 } else if (Game.actionableObject instanceof Bush && ((Bush)Game.actionableObject).hasResource()) {
                     //Pick the berry from the bush (No checks needed, returns null if empty)
-                    player.cursorItem = ((Bush)Game.actionableObject).pick();
+                    Game.player.cursorItem = ((Bush)Game.actionableObject).pick();
                 }
 
             } else if (Game.mouseClick && (Game.player.cursorItem != null)) { //Runs if mouse is not over anything but there's a cursor
-                Game.player.cursorItem.xPos = 2500;
-                Game.player.cursorItem.yPos = 2500;
+                //Get the world position at the top left of the screen
+                int worldX = Game.player.xPos - 935;
+                int worldY = Game.player.yPos - 490;
+
+                //Get the mouse position
+                PointerInfo a = MouseInfo.getPointerInfo();
+                Point b  = a.getLocation();
+                int mouseX = (int)(b.getX());
+                int mouseY = (int)(b.getY());
+
+                //Spawn the item at the mouse
+                Game.player.cursorItem.xPos = worldX + mouseX;
+                Game.player.cursorItem.yPos = worldY + mouseY + 12; //+12 makes it spawn directly under instead of above the mouse
+
+                //Add the item to the world
                 Game.world.addItem(Game.player.cursorItem);
-                System.out.println(Game.world.getItemAtIndex(2));
+                //Clear the item from the cursor
                 Game.player.cursorItem = null;
-                System.out.println(Game.world.getItemAtIndex(2));
             }
 
             //We no longer need to handle the click action or care about what's under the mouse
