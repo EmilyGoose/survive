@@ -1,5 +1,5 @@
 import javax.swing.*;
-import java.awt.*;
+import java.io.File;
 
 public class Game {
 
@@ -16,6 +16,15 @@ public class Game {
 
 
     public static void main(String[] args) {
+
+        //Make sure the system meets minimum requirements
+        System.out.println("Available processor cores: " + Runtime.getRuntime().availableProcessors());
+        if (Runtime.getRuntime().availableProcessors() > 0) { //You could probably run with 0 cores if you overclock
+            System.out.println("This computer meets minimum requirements");
+        } else { //What are you using, a toaster?
+            System.out.println("This computer is too weak. Try again after installing a processor.");
+        }
+        System.out.println();
 
         //TODO: Launch start screen here
 
@@ -47,8 +56,16 @@ public class Game {
             }
 
             if (Game.mouseClick && (Game.actionableObject != null)) {
-                //TODO: Perform the requisite action
-            }
+                //Pick up random items lying on the ground
+                if (Game.actionableObject instanceof InventoryObject) {
+                    player.cursorItem = Game.actionableObject;
+                    Game.world.removeItem(Game.actionableObject);
+                    Game.actionableObject = null;
+                }
+
+                //We no longer need to perform the click action
+                Game.mouseClick = false;
+            }// else if (Game.mouseClick)
 
             //Move the player
             player.xPos += (player.getXMovement() * player.getSpeed());

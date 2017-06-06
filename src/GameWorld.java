@@ -13,8 +13,11 @@ public class GameWorld {
 
     GameWorld() {
         worldItems = new ArrayList<GameObject>(0);
+
+        //TODO: Remove this debug stuff
         worldItems.add(new Bush(2200, 2200));
         worldItems.add(new Bush(2650, 2400));
+        worldItems.add(new Berry(2500, 2600));
     }
 
     public GameObject getItemAtIndex(int i) {
@@ -38,6 +41,15 @@ public class GameWorld {
     public void removeItemAtIndex(int i) {
         if (i < worldItems.size() && i >= 0) {
             worldItems.remove(i);
+        }
+    }
+
+    public boolean removeItem(GameObject o) {
+        if (worldItems.indexOf(o) > -1) {
+            this.removeItemAtIndex(worldItems.indexOf(o));
+            return true;
+        } else {
+            return false;
         }
     }
 

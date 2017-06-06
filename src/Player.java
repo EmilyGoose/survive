@@ -14,7 +14,7 @@ public class Player extends GameObject {
     private int xMovement = 0;
     private int yMovement = 0;
 
-    private GameObject cursorItem;
+    public GameObject cursorItem;
     private GameObject equippedTool; //TODO: Tool interface
 
     Player() {
@@ -87,6 +87,7 @@ public class Player extends GameObject {
     }
 
     public void setSpeed(int newSpeed) {
+        System.exit(1);
         this.speed = newSpeed;
     }
 
