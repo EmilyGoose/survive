@@ -117,7 +117,11 @@ public class GameWindow extends JFrame {
                 //Find the position relative to the player, who is always drawn at 935, 490 but is positioned at 960, 590
                 //Every GameObject is positioned at the bottom center because of the perspective
                 object = Game.world.getItemAtIndex(i);
-                objectImage = Game.images.getImage(object.getImageName());
+                try {
+                    objectImage = Game.images.getImage(object.getImageName());
+                } catch (Exception e) {
+                    objectImage = Game.images.getImage("placeholder");
+                }
                 objectWidth = objectImage.getWidth(this);
                 objectHeight = objectImage.getHeight(this);
 
@@ -156,8 +160,32 @@ public class GameWindow extends JFrame {
                 g.drawImage(cursorItemImage, mouseX - 10, mouseY - 10, this);
             }
 
+            //Draw the player's status
+            //Background
+            g.setColor(Color.white);
+            g.fillRect(10, 10, 200, 25);
+            g.fillRect(10, 40, 200, 25);
+            g.fillRect(10, 70, 200, 25);
+            //Actual percentages
+            g.setColor(Color.green);
+            g.fillRect(10, 10, Game.player.getHealth() * 2, 25);
+            g.fillRect(10, 40, (int)(((double)Game.player.getHunger() / Game.player.maxHunger) * 200), 25);
+            //Calculate the color for warmth
+            double warmthPercentage = (double)Game.player.getWarmth() / Game.player.maxWarmth;
+            g.setColor(new Color((int)(warmthPercentage * 255),0, (int)(255 - (warmthPercentage * 255)), (int)Math.min((warmthPercentage + 0.5) * 255, 175)));
+            g.fillRect(10, 70, (int)(warmthPercentage * 200), 25);
+            //Outlines
+            g.setColor(Color.black);
+            g.drawRect(10, 10, 200, 25);
+            g.drawRect(10, 40, 200, 25);
+            g.drawRect(10, 70, 200, 25);
+            //Text
+            g.drawString("HEALTH", 15, 30); //The coordinates for text are bottom left for some reason
+            g.drawString("HUNGER", 15, 60); //The coordinates for text are bottom left for some reason
+            g.drawString("WARMTH", 15, 90);
+
             //debug
-            g.drawString(playerX + ", " + playerY, 100, 100); //TODO: Remove once no longer required for debug
+            //g.drawString(playerX + ", " + playerY, 100, 100); //TODO: Remove once no longer required for debug
 
         }
 

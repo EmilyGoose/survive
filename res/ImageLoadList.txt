@@ -1,5 +1,9 @@
 player//person_placeholder.png
-tree//tree_placeholder.png
-bush//bush_placeholder.png
-berry//berries_placeholder.png
+tree//tree.png
+bush//bush.png
+berry//berries.png
 bushberry//bushberries.png
+sapling//sapling.png
+sapling_dead//deadsapling.png
+stick//stick.png
+placeholder//placeholder.png

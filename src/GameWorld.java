@@ -11,13 +11,18 @@ public class GameWorld {
     //All the objects in the world
     private static ArrayList<GameObject> worldItems;
 
+    //How many units the player freezes per frame. Can be loosely interpreted as temperature
+    private int freezeRate;
+
     GameWorld() {
         worldItems = new ArrayList<GameObject>(0);
+        this.freezeRate = 1;
 
         //TODO: Remove this debug stuff
         worldItems.add(new Bush(2200, 2200));
         worldItems.add(new Bush(2650, 2400));
-        worldItems.add(new Berry(2500, 2600));
+        worldItems.add(new Sapling(2100, 2000));
+        worldItems.add(new Sapling(2600, 2600));
     }
 
     public GameObject getItemAtIndex(int i) {
@@ -55,5 +60,13 @@ public class GameWorld {
 
     public int getArraySize() {
         return worldItems.size();
+    }
+
+    public int getFreezeRate() {
+        return this.freezeRate;
+    }
+
+    public void setFreezeRate(int rate) {
+        this.freezeRate = rate;
     }
 }
