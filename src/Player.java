@@ -7,7 +7,9 @@
 public class Player extends GameObject {
     private int health;
     private int hunger;
+    public final int maxHunger = 7200; //Hunger runs out in 2 minutes at 60 FPS (2 * 60 * 60 = 7200)
     private int warmth;
+    public final int maxWarmth = 7200; //Ditto
     private int speed = 5;
     private Inventory inventory;
 
@@ -20,8 +22,8 @@ public class Player extends GameObject {
     Player() {
         super(2500, 2500);
         this.health = 100;
-        this.hunger = 100;
-        this.warmth = 100;
+        this.hunger = this.maxHunger;
+        this.warmth = this.maxWarmth;
         this.inventory = new Inventory();
         this.setImageName("player");
     }
@@ -33,8 +35,8 @@ public class Player extends GameObject {
 
     public void addFood(int add) {
         this.hunger += add;
-        if (this.hunger > 100) {
-            this.hunger = 100;
+        if (this.hunger > this.maxHunger) {
+            this.hunger = this.maxHunger;
         }
     }
 
@@ -42,6 +44,23 @@ public class Player extends GameObject {
         this.hunger -= i;
         if (this.hunger < 0) {
             this.hunger = 0;
+        }
+    }
+
+    //Warmth-related functions
+    public int getWarmth() {return this.warmth; }
+
+    public void addWarmth(int add) {
+        this.warmth += add;
+        if (this.warmth > this.maxWarmth) {
+            this.warmth = this.maxWarmth;
+        }
+    }
+
+    public void removeWarmth(int i) {
+        this.warmth -= i;
+        if (this.warmth < 0) {
+            this.warmth = 0;
         }
     }
 

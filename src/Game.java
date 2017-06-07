@@ -1,3 +1,4 @@
+import javax.annotation.Resource;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -14,7 +15,6 @@ public class Game {
     public static ImageLoader images;
     public static GameObject actionableObject; //Object that the mouse is over
     public static boolean mouseClick; //Whether there's a new mouse click to process
-
 
     public static void main(String[] args) {
 
@@ -35,7 +35,7 @@ public class Game {
         //Make a new instance of Player
         player = new Player();
 
-        //Make the new world
+        //Generate the new world
         world = new GameWorld();
 
         //TODO: Progress bar
@@ -56,6 +56,10 @@ public class Game {
                 }
             }
 
+            //Move the player
+            player.xPos += (player.getXMovement() * player.getSpeed());
+            player.yPos += (player.getYMovement() * player.getSpeed());
+
             if (Game.mouseClick && (Game.actionableObject != null)) {
                 //Pick up random items lying on the ground
                 if (Game.actionableObject instanceof InventoryObject && Game.player.cursorItem == null) {
@@ -64,12 +68,15 @@ public class Game {
                     //Clear the item from the world
                     Game.world.removeItem(Game.actionableObject);
                     Game.actionableObject = null;
-                } else if (Game.actionableObject instanceof Bush && ((Bush)Game.actionableObject).hasResource()) {
-                    //Pick the berry from the bush (No checks needed, returns null if empty)
-                    Game.player.cursorItem = ((Bush)Game.actionableObject).pick();
+                } else if (Game.actionableObject instanceof ResourceGenerator &&
+                        ((ResourceGenerator)Game.actionableObject).hasResource() && //Make sure the bush/sapling/whatever is full
+                        Game.player.cursorItem == null //Make sure the player isn't holding anything
+                        ) {
+                    //Pick the generated resource from the item (No checks needed, returns null if empty)
+                    Game.player.cursorItem = ((ResourceGenerator)Game.actionableObject).pick();
                 }
 
-            } else if (Game.mouseClick && (Game.player.cursorItem != null)) { //Runs if mouse is not over anything but there's a cursor
+            } else if (Game.mouseClick && (Game.player.cursorItem != null)) { //Runs if mouse is not over anything but there's a cursor item
                 //Get the world position at the top left of the screen
                 int worldX = Game.player.xPos - 935;
                 int worldY = Game.player.yPos - 490;
@@ -94,13 +101,14 @@ public class Game {
             Game.mouseClick = false;
             Game.actionableObject = null;
 
-            //Move the player
-            player.xPos += (player.getXMovement() * player.getSpeed());
-            player.yPos += (player.getYMovement() * player.getSpeed());
+            //Apply status effects such as hunger and warmth here
+            Game.player.removeHunger(1);
+            Game.player.removeWarmth(Game.world.getFreezeRate());
 
             //This happens last to ensure we're measuring the time taken by *everything*
             gameWindow.repaint();
             lastFrame = System.currentTimeMillis();
+
             //NO MORE CODE BEYOND THIS POINT
             //ALL CODE WILL BE DESTROYED ON SIGHT
         } while (true); // this lil guy gets an exception though because he appeases the compiler for now
