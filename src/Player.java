@@ -1,3 +1,5 @@
+import java.awt.*;
+
 /**
  * Player.java
  * Main player class for Survive
@@ -11,7 +13,7 @@ public class Player extends GameObject {
     private int warmth;
     public final int maxWarmth = 7200; //Ditto
     private int speed = 5;
-    private Inventory inventory;
+    public Inventory inventory;
 
     private int xMovement = 0;
     private int yMovement = 0;
@@ -25,6 +27,7 @@ public class Player extends GameObject {
         this.hunger = this.maxHunger;
         this.warmth = this.maxWarmth;
         this.inventory = new Inventory();
+        this.mouseHitbox = new Rectangle(960-25, 540-50, 50, 100);
         this.setImageName("player");
     }
 

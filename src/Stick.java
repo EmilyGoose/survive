@@ -1,3 +1,9 @@
+/**
+ * Stick.java
+ * Stick that comes from a sapling
+ * Misha Larionov
+ */
+
 public class Stick extends InventoryObject {
 
     Stick() {

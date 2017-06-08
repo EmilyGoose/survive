@@ -1,3 +1,8 @@
+/**
+ * Berry.java
+ * Berry that comes from a bush
+ */
+
 public class Berry extends InventoryObject {
 
     Berry() {

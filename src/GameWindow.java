@@ -153,6 +153,19 @@ public class GameWindow extends JFrame {
 
             //Draw the player
             g.drawImage(Game.images.getImage("player"), 960-25, 540-50, this);
+            g.drawRect(960-25, 540-50, 50, 100);
+
+            //Draw the inventory
+            //Background
+            g.setColor(Color.gray);
+            g.fillRect(1840, 20, 60, 555);
+            //Squares
+            for (int box = 0; box < 10; box ++) {
+                g.setColor(Color.white);
+                g.fillRect(1845, 25 + 55 * box, 50, 50);
+                g.setColor(Color.black);
+                g.drawRect(1845, 25 + 55 * box, 50, 50);
+            }
 
             //Draw the item the player's holding in the cursor
             if(Game.player.cursorItem != null) {
@@ -184,9 +197,19 @@ public class GameWindow extends JFrame {
             g.drawString("HUNGER", 15, 60); //The coordinates for text are bottom left for some reason
             g.drawString("WARMTH", 15, 90);
 
-            //debug
-            //g.drawString(playerX + ", " + playerY, 100, 100); //TODO: Remove once no longer required for debug
 
+
+            //Check to see if the player is the actionable object
+            if (Game.player.mouseHitbox.intersects(mouseRectangle)) {
+                Game.actionableObject = Game.player;
+            }
+
+            //Check to see if the inventory is the actionable object
+            if (mouseRectangle.intersects(Game.player.inventory.getMainBox())) {
+                //Set the actionable object to null first so the player doesn't click on things behind the inventory
+                Game.actionableObject = null;
+                //We'll check specific boxes later in Game since Game.actionableObject cannot be Inventory
+            }
         }
 
         public void keyTyped(KeyEvent e) {}
