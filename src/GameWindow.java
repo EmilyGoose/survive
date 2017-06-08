@@ -164,6 +164,11 @@ public class GameWindow extends JFrame {
                 g.setColor(Color.black);
                 g.drawRect(1845, 25 + 55 * box, 50, 50);
                 //TODO: Draw the image of the object
+                InventoryObject boxObject = Game.player.inventory.getItemAtSlot(box, false);
+                if (boxObject != null) {
+                    //Draw the object in the center of the box
+                    g.drawImage(Game.images.getImage(boxObject.getImageName()), 1858, 38 + 55 * box, this);
+                }
             }
 
             //Draw the item the player's holding in the cursor
