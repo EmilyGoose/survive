@@ -1,3 +1,5 @@
+import com.sun.jndi.ldap.Ber;
+
 import javax.annotation.Resource;
 import javax.swing.*;
 import java.awt.*;
@@ -74,6 +76,10 @@ public class Game {
                         ) {
                     //Pick the generated resource from the item (No checks needed, returns null if empty)
                     Game.player.cursorItem = ((ResourceGenerator)Game.actionableObject).pick();
+                } else if (Game.actionableObject instanceof Player && Game.player.cursorItem instanceof Berry) {
+                    //The player eats the berry and it is destroyed
+                    Game.player.cursorItem = null;
+                    Game.player.addFood(256); //No one questions powers of 2 when used as arbitrary numbers
                 }
 
             } else if (Game.mouseClick && (Game.player.cursorItem != null)) { //Runs if mouse is not over anything but there's a cursor item
