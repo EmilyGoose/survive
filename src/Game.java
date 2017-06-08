@@ -1,9 +1,5 @@
-import com.sun.jndi.ldap.Ber;
-
-import javax.annotation.Resource;
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
 
 public class Game {
 
@@ -66,7 +62,7 @@ public class Game {
                 //Pick up random items lying on the ground
                 if (Game.actionableObject instanceof InventoryObject && Game.player.cursorItem == null) {
                     //Transfer the item to the cursor
-                    Game.player.cursorItem = Game.actionableObject;
+                    Game.player.cursorItem = (InventoryObject)Game.actionableObject;
                     //Clear the item from the world
                     Game.world.removeItem(Game.actionableObject);
                     Game.actionableObject = null;
@@ -82,7 +78,7 @@ public class Game {
                     Game.player.addFood(256); //No one questions powers of 2 when used as arbitrary numbers
                 }
 
-            } else if (Game.mouseClick && (Game.player.cursorItem != null)) { //Runs if mouse is not over anything but there's a cursor item
+            } else if (Game.mouseClick) { //Runs if mouse is not over anything
                 //Get the world position at the top left of the screen
                 int worldX = Game.player.xPos - 935;
                 int worldY = Game.player.yPos - 490;
@@ -93,14 +89,38 @@ public class Game {
                 int mouseX = (int)(b.getX());
                 int mouseY = (int)(b.getY());
 
-                //Spawn the item at the mouse
-                Game.player.cursorItem.xPos = worldX + mouseX;
-                Game.player.cursorItem.yPos = worldY + mouseY + 12; //+12 makes it spawn directly under instead of above the mouse
+                //Make a new rectangle representing the mouse
+                Rectangle mouseRectangle = new Rectangle(mouseX - 2, mouseY - 2, 4, 4);
 
-                //Add the item to the world
-                Game.world.addItem(Game.player.cursorItem);
-                //Clear the item from the cursor
-                Game.player.cursorItem = null;
+                //Check to see if it's touching the inventory
+                if (mouseRectangle.intersects(Game.player.inventory.getMainRectangle())) {
+                    int slot = -1;
+                    for (int box = 0; box < 10; box++) {
+                        if (mouseRectangle.intersects(Game.player.inventory.getSlotRectangle(box))) {
+                            slot = box;
+                            break; //We don't need to loop anymore, you can only mouse over one at a time
+                        }
+                    }
+                    if (slot > -1) {
+                        if (Game.player.cursorItem == null) {
+                            Game.player.cursorItem = Game.player.inventory.getItemAtSlot(slot, true);
+                        } else {
+                            //Swap the cursor and inventory item (Works even if one or both are null)
+                            InventoryObject item = Game.player.inventory.getItemAtSlot(slot, true);
+                            Game.player.inventory.putItemAtSlot(slot, Game.player.cursorItem);
+                            Game.player.cursorItem = item;
+                        }
+                    }
+                } else if (Game.player.cursorItem != null) { //Runs if there's an item in the cursor
+                    //Spawn the item at the mouse
+                    Game.player.cursorItem.xPos = worldX + mouseX;
+                    Game.player.cursorItem.yPos = worldY + mouseY + 12; //+12 makes it spawn directly under instead of above the mouse
+
+                    //Add the item to the world
+                    Game.world.addItem(Game.player.cursorItem);
+                    //Clear the item from the cursor
+                    Game.player.cursorItem = null;
+                }
             }
 
             //We no longer need to handle the click action or care about what's under the mouse

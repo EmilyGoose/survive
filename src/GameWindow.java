@@ -4,8 +4,6 @@
  * Misha Larionov
  */
 
-import org.w3c.dom.events.MouseEvent;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -165,6 +163,7 @@ public class GameWindow extends JFrame {
                 g.fillRect(1845, 25 + 55 * box, 50, 50);
                 g.setColor(Color.black);
                 g.drawRect(1845, 25 + 55 * box, 50, 50);
+                //TODO: Draw the image of the object
             }
 
             //Draw the item the player's holding in the cursor
@@ -205,7 +204,7 @@ public class GameWindow extends JFrame {
             }
 
             //Check to see if the inventory is the actionable object
-            if (mouseRectangle.intersects(Game.player.inventory.getMainBox())) {
+            if (mouseRectangle.intersects(Game.player.inventory.getMainRectangle())) {
                 //Set the actionable object to null first so the player doesn't click on things behind the inventory
                 Game.actionableObject = null;
                 //We'll check specific boxes later in Game since Game.actionableObject cannot be Inventory
