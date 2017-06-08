@@ -18,7 +18,7 @@ public class Player extends GameObject {
     private int xMovement = 0;
     private int yMovement = 0;
 
-    public GameObject cursorItem;
+    public InventoryObject cursorItem;
     private GameObject equippedTool; //TODO: Tool interface
 
     Player() {

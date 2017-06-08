@@ -1,5 +1,3 @@
-import org.w3c.dom.css.Rect;
-
 import java.awt.*;
 
 /**
@@ -11,8 +9,7 @@ import java.awt.*;
 public class Inventory {
     private InventoryObject[] items;
     private Rectangle[] boxRects;
-    private Rectangle mainBox;
-    private int selectedBox;
+    private Rectangle mainRectangle;
 
     Inventory() {
         this.items = new InventoryObject[10];
@@ -21,12 +18,24 @@ public class Inventory {
             boxRects[box] = new Rectangle(1845, 25 + 55 * box, 50, 50);
         }
         //If the player is moused over the inventory but not a specific box, this will stop them from clicking behind it
-        this.mainBox = new Rectangle(1840, 20, 60, 555);
-        this.selectedBox = -1;
+        this.mainRectangle = new Rectangle(1840, 20, 60, 555);
     }
 
-    public InventoryObject[] getItems() {
-        return this.items;
+    public InventoryObject getItemAtSlot(int s, boolean take) {
+        InventoryObject item = this.items[s];
+        if (take) { //Tracks whether the item is removed or kept in the slot
+            this.items[s] = null;
+        }
+        return item;
+    }
+
+    public boolean putItemAtSlot(int s, InventoryObject item) {
+        if (this.items[s] == null) {
+            this.items[s] = item;
+            return true; //Adding the object was a success
+        } else {
+            return false; //The slot is taken, doesn't work that way
+        }
     }
 
     public boolean addItem(InventoryObject item) {
@@ -45,16 +54,7 @@ public class Inventory {
         return boxRects[i];
     }
 
-    public Rectangle getMainBox() {
-        return this.mainBox;
+    public Rectangle getMainRectangle() {
+        return this.mainRectangle;
     }
-
-    public int getSelectedBox() {
-        return this.selectedBox;
-    }
-
-    public void setSelectedBox(int b) {
-        this.selectedBox = b;
-    }
-
 }
