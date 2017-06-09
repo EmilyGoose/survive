@@ -8,6 +8,7 @@ import java.awt.*;
 
 public class Player extends GameObject {
     private int health;
+    public final int maxHealth = 1000;
     private int hunger;
     public final int maxHunger = 7200; //Hunger runs out in 2 minutes at 60 FPS (2 * 60 * 60 = 7200)
     private int warmth;
@@ -22,8 +23,9 @@ public class Player extends GameObject {
     private GameObject equippedTool; //TODO: Tool interface
 
     Player() {
-        super(2500, 2500);
-        this.health = 100;
+        //Casting is somewhat redundant but I don't want to change this if WORLD_SIZE becomes odd
+        super((int)(Game.WORLD_SIZE/2), (int)(Game.WORLD_SIZE/2));
+        this.health = this.maxHealth;
         this.hunger = this.maxHunger;
         this.warmth = this.maxWarmth;
         this.inventory = new Inventory();

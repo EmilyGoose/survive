@@ -4,7 +4,7 @@ import java.awt.*;
 public class Game {
 
     //Framerate-related variables
-    private static final int MAX_FRAMES = 60;
+    public static final int MAX_FRAMES = 60;
     private static long lastFrame = 0;
 
     //Important game thingies there are only one of
@@ -13,6 +13,8 @@ public class Game {
     public static ImageLoader images;
     public static GameObject actionableObject; //Object that the mouse is over
     public static boolean mouseClick; //Whether there's a new mouse click to process
+    private static long age = 0; //Number of frames the game has run for
+    public static final int WORLD_SIZE = 5000; //Size the world first generates at
 
     public static void main(String[] args) {
 
@@ -27,32 +29,28 @@ public class Game {
 
         //TODO: Launch start screen here
 
-        //Load the images
-        images = new ImageLoader();
+        //All the constructors run in the same thread so we don't need to wait for them
 
-        //Make a new instance of Player
-        player = new Player();
+        //Load the images
+        System.out.println("Loading images...");
+        images = new ImageLoader();
+        System.out.println("Images loaded!");
 
         //Generate the new world
-        world = new GameWorld();
+        System.out.println("Loading world...");
+        world = new GameWorld(WORLD_SIZE);
+        System.out.println("World loaded with " + world.getArraySize() + " objects.");
 
-        //TODO: Progress bar
-        while(!(images.isReady())) {} //IntelliJ says this is confusing but whatever
+        //Make a new instance of Player
+        System.out.println("Spawning player...");
+        player = new Player();
+        System.out.println("Player spawned!");
 
+        System.out.println("Launching game window...");
         JFrame gameWindow = new GameWindow();
         //Main game loop starts here
         do {
             //Process everything here
-
-            //This happens last
-            if (System.currentTimeMillis() - lastFrame < 1000 / MAX_FRAMES) {
-                try {
-                    Thread.sleep(1000 / MAX_FRAMES - (System.currentTimeMillis() - lastFrame));
-                } catch (Exception e) {
-                    System.out.println("Thread could not sleep. Game may become unstable.");
-                    System.exit(1);
-                }
-            }
 
             //Move the player
             player.xPos += (player.getXMovement() * player.getSpeed());
@@ -127,17 +125,51 @@ public class Game {
             Game.mouseClick = false;
             Game.actionableObject = null;
 
+            //Iterate and update items such as bushes and saplings
+            for (int i = 0; i < Game.world.getArraySize(); i++) {
+                if (Game.world.getItemAtIndex(i) instanceof  ResourceGenerator) {
+                    ((ResourceGenerator) Game.world.getItemAtIndex(i)).update();
+                }
+            }
+
             //Apply status effects such as hunger and warmth here
             Game.player.removeHunger(1);
             Game.player.removeWarmth(Game.world.getFreezeRate());
+            //Punish the player for not eating
+            if (Game.player.getHunger() == 0) {
+                Game.player.takeDamage(1);
+            }
+            //Punish the player for not staying warm
+            if (Game.player.getWarmth() == 0) {
+                Game.player.takeDamage(2);
+            }
+
+            age += 1;
 
             //This happens last to ensure we're measuring the time taken by *everything*
             gameWindow.repaint();
             lastFrame = System.currentTimeMillis();
 
-            //NO MORE CODE BEYOND THIS POINT
+            //This happens after everything's done
+            if (System.currentTimeMillis() - lastFrame < 1000 / MAX_FRAMES) {
+                try {
+                    Thread.sleep(1000 / MAX_FRAMES - (System.currentTimeMillis() - lastFrame));
+                } catch (Exception e) {
+                    System.out.println("Thread could not sleep. Game may become unstable.");
+                    System.exit(1);
+                }
+            }
+
+            //NO MORE LOOP CODE BEYOND THIS POINT
             //ALL CODE WILL BE DESTROYED ON SIGHT
-        } while (true); // this lil guy gets an exception though because he appeases the compiler for now
+        } while (Game.player.getHealth() > 0);
+
+        //TODO: Make a "you die" screen here or something
+        System.exit(0);
+    }
+
+    public static long getAge() {
+        return age;
     }
 
 }

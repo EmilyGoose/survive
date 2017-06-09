@@ -2,8 +2,9 @@ player//person_placeholder.png
 tree//tree.png
 bush//bush.png
 berry//berries.png
-bushberry//bushberries.png
+bushberries//bushberries.png
 sapling//sapling.png
 sapling_dead//deadsapling.png
 stick//stick.png
 placeholder//placeholder.png
+stone//stone.png
