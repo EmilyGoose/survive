@@ -77,7 +77,6 @@ public class GameWindow extends JFrame {
 //                System.out.println("Could not load font");
 //            }
 
-            //TODO: Change focus so ALT-TAB isn't required first to move the player
         }
 
         public void paintComponent(Graphics g) {
@@ -127,26 +126,23 @@ public class GameWindow extends JFrame {
                 objectX = (object.xPos - objectWidth / 2) + worldX;
                 objectY = (object.yPos - objectHeight) + worldY;
 
-                //Create the mouse collision rectangle for the object
-                object.mouseHitbox = new Rectangle(objectX, objectY, objectWidth, objectHeight);
-                g.drawRect(objectX, objectY, objectWidth, objectHeight); //DEBUG
+                //To save resources, only do this if the object is within 100 pixels of the screen
+                if (objectX > -100 && objectX < 2020 && objectY > -100 && objectY < 1180) {
+                    //Create the mouse collision rectangle for the object
+                    object.mouseHitbox = new Rectangle(objectX, objectY, objectWidth, objectHeight);
+                    g.drawRect(objectX, objectY, objectWidth, objectHeight); //DEBUG
 
-                //Create the 4x4 player collision rectangle for the object //TODO: Fix
-                object.movementHitbox = new Rectangle(object.xPos - 2, object.yPos - 2, 4 ,4);
-                g.drawRect(object.xPos - 2, object.yPos - 2, 4 ,4); //DEBUG
-
-                //Check to see if the mouse is intersecting
-                if (object.mouseHitbox.intersects(mouseRectangle)) {
-                    Game.actionableObject = object;
+                    //Check to see if the mouse is intersecting
+                    if (object.mouseHitbox.intersects(mouseRectangle)) {
+                        //Make sure we're getting the topmost object in case of overlap
+                        if (Game.actionableObject == null || Game.actionableObject.yPos < object.yPos) {
+                            Game.actionableObject = object;
+                        }
+                    }
                 }
 
                 //Draw the object
                 g.drawImage(objectImage, objectX, objectY, this);
-
-                //Extra step for berries on a bush
-                if (object instanceof Bush && ((Bush)object).hasResource()) {
-                    g.drawImage(Game.images.getImage("bushberry"), objectX, objectY, this);
-                }
             }
 
             //Draw the player
@@ -163,7 +159,6 @@ public class GameWindow extends JFrame {
                 g.fillRect(1845, 25 + 55 * box, 50, 50);
                 g.setColor(Color.black);
                 g.drawRect(1845, 25 + 55 * box, 50, 50);
-                //TODO: Draw the image of the object
                 InventoryObject boxObject = Game.player.inventory.getItemAtSlot(box, false);
                 if (boxObject != null) {
                     //Draw the object in the center of the box
@@ -185,7 +180,7 @@ public class GameWindow extends JFrame {
             g.fillRect(10, 70, 200, 25);
             //Actual percentages
             g.setColor(Color.green);
-            g.fillRect(10, 10, Game.player.getHealth() * 2, 25);
+            g.fillRect(10, 10, (int)(((double)Game.player.getHealth() / Game.player.maxHealth) * 200), 25);
             g.fillRect(10, 40, (int)(((double)Game.player.getHunger() / Game.player.maxHunger) * 200), 25);
             //Calculate the color for warmth
             double warmthPercentage = (double)Game.player.getWarmth() / Game.player.maxWarmth;
@@ -243,11 +238,13 @@ public class GameWindow extends JFrame {
         }
 
         public void mouseClicked(java.awt.event.MouseEvent e) {
-            Game.mouseClick = true;
+
         }
 
         public void mousePressed(java.awt.event.MouseEvent e) {
-
+            if (e.getButton() == 1) { //Make sure it's the left mouse button
+                Game.mouseClick = true;
+            }
         }
 
         public void mouseReleased(java.awt.event.MouseEvent e) {

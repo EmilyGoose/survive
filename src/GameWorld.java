@@ -14,15 +14,30 @@ public class GameWorld {
     //How many units the player freezes per frame. Can be loosely interpreted as temperature
     private int freezeRate;
 
-    GameWorld() {
-        worldItems = new ArrayList<GameObject>(0);
-        this.freezeRate = 1;
+    //Constants (Maybe move to file?)
+    private final double BUSH_DENSITY = 0.2;
+    private final double SAPLING_DENSITY = 0.2;
+    private final double STONE_DENSITY = 0.05;
 
-        //TODO: Remove this debug stuff
-        worldItems.add(new Bush(2200, 2200));
-        worldItems.add(new Bush(2650, 2400));
-        worldItems.add(new Sapling(2100, 2000));
-        worldItems.add(new Sapling(2600, 2600));
+    GameWorld(int size) {
+        worldItems = new ArrayList<GameObject>(0);
+        this.freezeRate = 2;
+
+        //The world generates from (0,0) to (5000, 5000)
+        for (int i = 0; i < size/5; i++) {
+            //Spawn a bush
+            if (Math.random() <= BUSH_DENSITY) {
+                worldItems.add(new Bush((int)(Math.random() * size), (int)(Math.random() * size)));
+            }
+            //Spawn a sapling
+            if (Math.random() <= SAPLING_DENSITY) {
+                worldItems.add(new Sapling((int)(Math.random() * size), (int)(Math.random() * size)));
+            }
+            //Spawn a stone
+            if (Math.random() <= STONE_DENSITY) {
+                worldItems.add(new Stone((int)(Math.random() * size), (int)(Math.random() * size)));
+            }
+        }
     }
 
     public GameObject getItemAtIndex(int i) {

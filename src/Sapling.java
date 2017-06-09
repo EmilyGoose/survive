@@ -6,6 +6,10 @@
 
 public class Sapling extends GameObject implements ResourceGenerator{
     private boolean full; //Tracks whether the sapling has sticks to gather
+    private long lastPicked;
+    //These two can safely be declared locally but are placed here for readability
+    private final int maxRegrowthTime = 8; //Max regrowth time in minutes
+    private final double regrowthChance = 0.001 / Game.MAX_FRAMES; //Chance each frame sticks will replenish
 
     //Constructors start here
     Sapling() {
@@ -27,7 +31,9 @@ public class Sapling extends GameObject implements ResourceGenerator{
     public InventoryObject pick() {
         if (this.full) {
             this.full = false;
-            //Set the new image
+            //Remember when it was last picked
+            lastPicked = Game.getAge();
+            //Set the image to reflect the emptiness inside (me irl)
             this.setImageName("sapling_dead");
             return new Stick();
         } else {
@@ -35,4 +41,13 @@ public class Sapling extends GameObject implements ResourceGenerator{
         }
     }
 
+    public void update() {
+        if (!this.full) {
+            //Determine if we're going to spawn a new stick this tick
+            if (Game.getAge() >= lastPicked + maxRegrowthTime * 60 * Game.MAX_FRAMES || Math.random() <= regrowthChance) {
+                this.full = true;
+                this.setImageName("sapling");
+            }
+        }
+    }
 }

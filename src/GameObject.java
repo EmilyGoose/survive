@@ -11,7 +11,6 @@ public class GameObject {
     public int yPos;
     private String imageName;
     public Rectangle mouseHitbox;
-    public Rectangle movementHitbox;
 
     GameObject() {
         this.xPos = -1;
