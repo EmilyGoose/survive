@@ -21,7 +21,7 @@ public class GameWorld {
 
     GameWorld(int size) {
         worldItems = new ArrayList<GameObject>(0);
-        this.freezeRate = 2;
+        this.freezeRate = 5;
 
         //The world generates from (0,0) to (5000, 5000)
         for (int i = 0; i < size/5; i++) {
