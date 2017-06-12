@@ -124,13 +124,17 @@ public class GameWindow extends JFrame {
 
                 //Find where it should be drawn
                 objectX = (object.xPos - objectWidth / 2) + worldX;
-                objectY = (object.yPos - objectHeight) + worldY;
+                if (object instanceof CampFire) {
+                    //Fires are positioned at the center, not the bottom middle
+                    objectY = (object.yPos - objectHeight / 2) + worldY;
+                } else {
+                    objectY = (object.yPos - objectHeight) + worldY;
+                }
 
                 //To save resources, only do this if the object is within 100 pixels of the screen
                 if (objectX > -100 && objectX < 2020 && objectY > -100 && objectY < 1180) {
                     //Create the mouse collision rectangle for the object
                     object.mouseHitbox = new Rectangle(objectX, objectY, objectWidth, objectHeight);
-                    g.drawRect(objectX, objectY, objectWidth, objectHeight); //DEBUG
 
                     //Check to see if the mouse is intersecting
                     if (object.mouseHitbox.intersects(mouseRectangle)) {
@@ -145,9 +149,8 @@ public class GameWindow extends JFrame {
                 g.drawImage(objectImage, objectX, objectY, this);
             }
 
-            //Draw the player
-            g.drawImage(Game.images.getImage("player"), 960-25, 540-50, this);
-            g.drawRect(960-25, 540-50, 50, 100);
+            //Draw the player (Never changes, everything is drawn relative to this)
+            g.drawImage(Game.images.getImage("player"), 910, 390, this);
 
             //Draw the inventory
             //Background

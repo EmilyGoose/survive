@@ -8,3 +8,4 @@ sapling_dead//deadsapling.png
 stick//stick.png
 placeholder//placeholder.png
 stone//stone.png
+campfire//campfire.png
