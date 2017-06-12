@@ -132,9 +132,9 @@ public class Game {
                     ((ResourceGenerator) Game.world.getItemAtIndex(i)).update();
                 } else if (object instanceof CampFire) {
                     //Find the distance between the fire and the player
-                    int xDiff = Game.player.yPos - object.yPos;
-                    int yDiff = Game.player.xPos - object.yPos;
-                    double distance = Math.sqrt(xDiff * xDiff + yDiff + yDiff);
+                    int xDiff = Game.player.xPos - object.xPos;
+                    int yDiff = Game.player.yPos - object.yPos;
+                    double distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
                     //Warm the player if they are near enough to the campfire
                     if (distance <= ((CampFire) object).getRange()) {
                         Game.player.addWarmth(10);
