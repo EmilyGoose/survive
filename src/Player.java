@@ -24,12 +24,12 @@ public class Player extends GameObject {
 
     Player() {
         //Casting is somewhat redundant but I don't want to change this if WORLD_SIZE becomes odd
-        super((int)(Game.WORLD_SIZE/2), (int)(Game.WORLD_SIZE/2));
+        super((int)(Game.WORLD_SIZE/2), (int)(Game.WORLD_SIZE/2) + 100);
         this.health = this.maxHealth;
         this.hunger = this.maxHunger;
         this.warmth = this.maxWarmth;
         this.inventory = new Inventory();
-        this.mouseHitbox = new Rectangle(960-25, 540-50, 50, 100);
+        this.mouseHitbox = new Rectangle(910, 390, 50, 100);
         this.setImageName("player");
     }
 

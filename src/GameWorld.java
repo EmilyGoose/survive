@@ -15,9 +15,9 @@ public class GameWorld {
     private int freezeRate;
 
     //Constants (Maybe move to file?)
-    private final double BUSH_DENSITY = 0.2;
-    private final double SAPLING_DENSITY = 0.2;
-    private final double STONE_DENSITY = 0.05;
+    private final double BUSH_DENSITY = 0.05;
+    private final double SAPLING_DENSITY = 0.1;
+    private final double STONE_DENSITY = 0.01;
 
     GameWorld(int size) {
         worldItems = new ArrayList<GameObject>(0);
@@ -38,6 +38,8 @@ public class GameWorld {
                 worldItems.add(new Stone((int)(Math.random() * size), (int)(Math.random() * size)));
             }
         }
+
+        worldItems.add(new CampFire((int)(Game.WORLD_SIZE/2), (int)(Game.WORLD_SIZE/2)));
     }
 
     public GameObject getItemAtIndex(int i) {
