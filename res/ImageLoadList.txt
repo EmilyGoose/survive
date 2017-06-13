@@ -9,3 +9,4 @@ stick//stick.png
 placeholder//placeholder.png
 stone//stone.png
 campfire//campfire.png
+firestarter//campfire_inventory.png

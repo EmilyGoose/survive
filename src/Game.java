@@ -76,7 +76,7 @@ public class Game {
                     Game.player.addFood(256); //No one questions powers of 2 when used as arbitrary numbers
                 }
 
-            } else if (Game.mouseClick) { //Runs if mouse is not over anything
+            } else if (Game.mouseClick) { //Runs if mouse is not over anything but is still clicked
                 //Get the world position at the top left of the screen
                 int worldX = Game.player.xPos - 935;
                 int worldY = Game.player.yPos - 490;
@@ -110,12 +110,19 @@ public class Game {
                         }
                     }
                 } else if (Game.player.cursorItem != null) { //Runs if there's an item in the cursor
-                    //Spawn the item at the mouse
-                    Game.player.cursorItem.xPos = worldX + mouseX;
-                    Game.player.cursorItem.yPos = worldY + mouseY + 12; //+12 makes it spawn directly under instead of above the mouse
+                    if (Game.player.cursorItem instanceof FireStarter) {
+                        //Runs if the player is trying to place a fire
+                        //Spawn a fire at the cursor
+                        GameObject newFire = new CampFire(worldX + mouseX, worldY + mouseY + 12);
+                        Game.world.addItem(newFire);
+                    } else {
+                        //Spawn the item at the mouse
+                        Game.player.cursorItem.xPos = worldX + mouseX;
+                        Game.player.cursorItem.yPos = worldY + mouseY + 12; //+12 makes it spawn directly under instead of above the mouse
 
-                    //Add the item to the world
-                    Game.world.addItem(Game.player.cursorItem);
+                        //Add the item to the world
+                        Game.world.addItem(Game.player.cursorItem);
+                    }
                     //Clear the item from the cursor
                     Game.player.cursorItem = null;
                 }

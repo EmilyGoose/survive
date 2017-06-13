@@ -38,8 +38,6 @@ public class GameWorld {
                 worldItems.add(new Stone((int)(Math.random() * size), (int)(Math.random() * size)));
             }
         }
-
-        worldItems.add(new CampFire((int)(Game.WORLD_SIZE/2), (int)(Game.WORLD_SIZE/2)));
     }
 
     public GameObject getItemAtIndex(int i) {

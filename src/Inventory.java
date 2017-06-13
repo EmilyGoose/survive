@@ -40,8 +40,9 @@ public class Inventory {
 
     public boolean addItem(InventoryObject item) {
         //Returns false if the inventory is full
+        //Find an empty space and drop the item there
         for (int i = 0; i < this.items.length; i++) {
-            if (this.items[i] != null) {
+            if (this.items[i] == null) {
                 this.items[i] = item;
                 return true;
             }
