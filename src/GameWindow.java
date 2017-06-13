@@ -9,7 +9,6 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
-//import java.net.URL;
 
 public class GameWindow extends JFrame {
 
@@ -36,6 +35,7 @@ public class GameWindow extends JFrame {
         this.requestFocus();
         this.addKeyListener(gamePanel);
         this.addMouseListener(gamePanel);
+        this.setFocusTraversalKeysEnabled(false); //Allows us to capture TAB key presses
 
         getContentPane().add(gamePanel);
         pack(); //makes the frame fit the contents
@@ -63,20 +63,10 @@ public class GameWindow extends JFrame {
 
     static class GamePanel extends JPanel  implements KeyListener, MouseListener {
 
+        private boolean tabMenuOpen;
+
         public GamePanel() {
             this.setPreferredSize(new Dimension(1920, 1080));
-
-            //Font loading code for later use
-//            try {
-//                URL fontUrl = new URL("https://fonts.gstatic.com/s/productsans/v9/HYvgU2fE2nRJvZ5JFAumwZS3E-kSBmtLoNJPDtbj2Pk.ttf");
-//                Font font = Font.createFont(Font.TRUETYPE_FONT, fontUrl.openStream());
-//                font = font.deriveFont(Font.PLAIN,20);
-//                GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-//                ge.registerFont(font);
-//            } catch (Exception e) {
-//                System.out.println("Could not load font");
-//            }
-
         }
 
         public void paintComponent(Graphics g) {
@@ -155,7 +145,7 @@ public class GameWindow extends JFrame {
             //Draw the inventory
             //Background
             g.setColor(Color.gray);
-            g.fillRect(1840, 20, 60, 555);
+            g.fillRect(1840, 20, 60, 605);
             //Squares
             for (int box = 0; box < 10; box ++) {
                 g.setColor(Color.white);
@@ -200,6 +190,7 @@ public class GameWindow extends JFrame {
             g.drawString("WARMTH", 15, 90);
 
             //Build number
+            g.setFont(Game.fonts.getFont("roboto"));
             g.drawString("Version 0.2 WIP - Art is not final", 10, 1070);
 
             //Check to see if the player is the actionable object
@@ -226,6 +217,8 @@ public class GameWindow extends JFrame {
                 Game.player.addYMovemement(-1);
             } else if(e.getKeyChar() == 's' ){
                 Game.player.addYMovemement(1);
+            } else if (e.getKeyCode() == 9) { //TAB key
+                this.tabMenuOpen = !(this.tabMenuOpen); //Toggle the tab menu being open
             }
         }
 
@@ -261,6 +254,10 @@ public class GameWindow extends JFrame {
 
         public void mouseExited(java.awt.event.MouseEvent e) {
 
+        }
+
+        public boolean isTabMenuOpen() {
+            return this.tabMenuOpen;
         }
     }
 }

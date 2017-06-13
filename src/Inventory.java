@@ -9,6 +9,7 @@ import java.awt.*;
 public class Inventory {
     private InventoryObject[] items;
     private Rectangle[] boxRects;
+    private Rectangle[] boxCraftRects;
     private Rectangle mainRectangle;
 
     Inventory() {
@@ -18,7 +19,7 @@ public class Inventory {
             boxRects[box] = new Rectangle(1845, 25 + 55 * box, 50, 50);
         }
         //If the player is moused over the inventory but not a specific box, this will stop them from clicking behind it
-        this.mainRectangle = new Rectangle(1840, 20, 60, 555);
+        this.mainRectangle = new Rectangle(1840, 20, 60, 605);
     }
 
     public InventoryObject getItemAtSlot(int s, boolean take) {
@@ -57,5 +58,31 @@ public class Inventory {
 
     public Rectangle getMainRectangle() {
         return this.mainRectangle;
+    }
+
+    public boolean canCraftFire() {
+        int sticks = 0;
+        int stones = 0;
+        for (InventoryObject o : this.items) {
+            if (o instanceof Stick) {
+                sticks += 1;
+            } else if (o instanceof Stone) {
+                stones += 1;
+            }
+        }
+        return (sticks >= 2 && stones >= 4);
+    }
+
+    public boolean canCraftAxe() {
+        boolean stick = false;
+        boolean stone = false;
+        for (InventoryObject o : this.items) {
+            if (o instanceof Stick) {
+                stick = true;
+            } else if (o instanceof Stone) {
+                stone = false;
+            }
+        }
+        return (stick && stone);
     }
 }

@@ -11,6 +11,7 @@ public class Game {
     public static Player player;
     public static GameWorld world;
     public static ImageLoader images;
+    public static FontLoader fonts;
     public static GameObject actionableObject; //Object that the mouse is over
     public static boolean mouseClick; //Whether there's a new mouse click to process
     private static long age = 0; //Number of frames the game has run for
@@ -35,6 +36,11 @@ public class Game {
         System.out.println("Loading images...");
         images = new ImageLoader();
         System.out.println("Images loaded!");
+
+        //Load the fonts
+        System.out.println("Loading fonts...");
+        fonts = new FontLoader();
+        System.out.println("Fonts loaded!");
 
         //Generate the new world
         System.out.println("Loading world...");
