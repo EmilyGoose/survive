@@ -200,7 +200,7 @@ public class GameWindow extends JFrame {
             g.drawString("WARMTH", 15, 90);
 
             //Build number
-            g.drawString("Version 0.1 - Art is not final", 10, 1070);
+            g.drawString("Version 0.2 WIP - Art is not final", 10, 1070);
 
             //Check to see if the player is the actionable object
             if (Game.player.mouseHitbox.intersects(mouseRectangle)) {
