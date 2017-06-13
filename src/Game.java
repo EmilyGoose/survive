@@ -14,7 +14,13 @@ public class Game {
     public static FontLoader fonts;
     public static GameObject actionableObject; //Object that the mouse is over
     public static boolean mouseClick; //Whether there's a new mouse click to process
-    private static long age = 0; //Number of frames the game has run for
+
+    //Number of frames the game has run for
+    //At 60 FPS this game will run for almost 5 billion years before hitting the max value of 9,223,372,036,854,775,807
+    //This is the very definition of edge case
+    private static long age = 0; //With an int this game would've hit max value at just over 1 year runtime
+
+    //Constants
     public static final int WORLD_SIZE = 5000; //Size the world first generates at
 
     public static void main(String[] args) {
