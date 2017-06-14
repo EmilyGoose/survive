@@ -35,6 +35,7 @@ public class Game {
             System.out.println("This computer meets minimum requirements");
         } else { //What are you using, a toaster?
             System.out.println("This computer is too weak. Try again after installing a processor.");
+            System.exit(1);
         }
         System.out.println();
 
