@@ -99,10 +99,17 @@ public class Inventory {
         if (this.canCraftFire()) {
             //Remove 2 sticks and 4 rocks
             int sticksRemoved = 0;
-            int rocksRemoved = 0;
+            int stonesRemoved = 0;
             for (int i = 0; i < this.items.length; i++) {
-
+                if (this.getItemAtSlot(i, false) instanceof Stick && sticksRemoved < 2) {
+                    this.getItemAtSlot(i, true);
+                    sticksRemoved += 1;
+                } else if (this.getItemAtSlot(i, false) instanceof Stone && stonesRemoved < 4) {
+                    this.getItemAtSlot(i, true);
+                    stonesRemoved += 1;
+                }
             }
+            this.addItem(new FireStarter());
         }
     }
 }
