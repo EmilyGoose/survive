@@ -31,7 +31,7 @@ public class Player extends GameObject {
         this.inventory = new Inventory();
         this.inventory.addItem(new FireStarter());
         this.mouseHitbox = new Rectangle(910, 390, 50, 100);
-        this.setImageName("player");
+        this.setImageName("player_1");
     }
 
     //Hunger-related functions

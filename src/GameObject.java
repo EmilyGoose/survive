@@ -5,8 +5,9 @@
  */
 
 import java.awt.Rectangle;
+import java.io.Serializable;
 
-public class GameObject {
+public class GameObject implements Serializable {
     public int xPos;
     public int yPos;
     private String imageName;

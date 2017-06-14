@@ -72,6 +72,11 @@ public class GameWindow extends JFrame {
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
 
+            g.drawImage(Game.images.getImage("grass"), 0, 0, this);
+            g.drawImage(Game.images.getImage("grass"), 0, 900, this);
+            g.drawImage(Game.images.getImage("grass"), 900, 0, this);
+            g.drawImage(Game.images.getImage("grass"), 900, 900, this);
+
             //Declare a variable to be initialized later
             GameObject currentItem;
 
@@ -140,7 +145,7 @@ public class GameWindow extends JFrame {
             }
 
             //Draw the player (Never changes, everything is drawn relative to this)
-            g.drawImage(Game.images.getImage("player"), 910, 390, this);
+            g.drawImage(Game.images.getImage(Game.player.getImageName()), 910, 390, this);
 
             //Draw the inventory
             //Background

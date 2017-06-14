@@ -24,8 +24,11 @@ public class Game {
     */
     private static long age = 0;
 
+    //Last time animated sprites have been updated
+    private static long lastSpriteUpdate = 0;
+
     //Constants
-    public static final int WORLD_SIZE = 5000; //Size the world first generates at
+    public static final int WORLD_SIZE = 10000; //Size the world first generates at
 
     public static void main(String[] args) {
 
@@ -68,10 +71,22 @@ public class Game {
         //Main game loop starts here
         do {
             //Process everything here
+            if (Game.age - Game.lastSpriteUpdate > 10) {
+                //Flag it as -1 to tell the sprites to update themselves
+                Game.lastSpriteUpdate = -1;
+            }
 
             //Move the player
             player.xPos += (player.getXMovement() * player.getSpeed());
             player.yPos += (player.getYMovement() * player.getSpeed());
+
+            //Update the player's sprite to reflect the walking
+            if (player.getXMovement() != 0 || player.getYMovement() != 0) {
+                //swap walking sprites
+                if (Game.lastSpriteUpdate == -1) {
+                    player.setImageName((player.getImageName().equals("player_1")) ? "player_2" : "player_1");
+                }
+            }
 
             if (Game.mouseClick && (Game.actionableObject != null)) {
                 //Pick up random items lying on the ground
@@ -189,6 +204,11 @@ public class Game {
                         JOptionPane.WARNING_MESSAGE
                 );
                 System.exit(1);
+            }
+
+            //If sprites have been updated this round, update lastSpriteUpdate
+            if (Game.lastSpriteUpdate == -1) {
+                Game.lastSpriteUpdate = Game.age;
             }
 
             //This happens last to ensure we're measuring the time taken by *everything*
