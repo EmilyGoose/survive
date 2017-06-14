@@ -208,9 +208,7 @@ public class GameWindow extends JFrame {
             g.drawString("HUNGER", 15, 60); //The coordinates for text are bottom left for some reason
             g.drawString("WARMTH", 15, 90);
 
-            //Build number
-            g.setFont(Game.fonts.getFont("roboto"));
-            g.drawString("Version 0.2", 10, 1070);
+            g.drawString("Version 0.5 WIP", 10, 1070);
 
             //Check to see if the player is the actionable object
             if (Game.player.mouseHitbox.intersects(mouseRectangle)) {
