@@ -42,8 +42,6 @@ public class Game {
         }
         System.out.println();
 
-        //TODO: Launch start screen here
-
         //All the constructors run in the same thread so we don't need to wait for them
 
         //Load the images
@@ -180,6 +178,8 @@ public class Game {
                     if (distance <= ((CampFire) object).getRange()) {
                         Game.player.addWarmth(10);
                     }
+                    //Tell the campfire to update itself
+                    ((CampFire) object).update();
                 }
             }
 
@@ -228,8 +228,11 @@ public class Game {
             //NO MORE LOOP CODE BEYOND THIS POINT
             //ALL CODE WILL BE DESTROYED ON SIGHT
         } while (Game.player.getHealth() > 0);
-
-        //TODO: Make a "you die" screen here or something
+        JOptionPane.showMessageDialog(gameWindow,
+                "You survived for " + Game.age/60.0/60 + " minutes",
+                "You died!",
+                JOptionPane.WARNING_MESSAGE
+        );
         System.exit(0);
     }
 

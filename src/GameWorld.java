@@ -14,10 +14,10 @@ public class GameWorld {
     //How many units the player freezes per frame. Can be loosely interpreted as temperature
     private int freezeRate;
 
-    //Constants (Maybe move to file?)
-    private final double BUSH_DENSITY = 0.05;
-    private final double SAPLING_DENSITY = 0.1;
-    private final double STONE_DENSITY = 0.01;
+    //Constants (Maybe move to file?)sd
+    private final double BUSH_DENSITY = 0.1;
+    private final double SAPLING_DENSITY = 0.05;
+    private final double STONE_DENSITY = 0.03;
 
     GameWorld(int size) {
         worldItems = new ArrayList<GameObject>(0);
