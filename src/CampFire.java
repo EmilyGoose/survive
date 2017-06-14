@@ -5,25 +5,40 @@
 
 public class CampFire extends GameObject {
 
-    private int range;
+    private int baseRange = 100;
+    private double size = 1;
+
 
     CampFire() {
         super(2500, 2500);
         this.setImageName("campfire");
-        this.range = 50;
     }
 
     CampFire(int x, int y) {
         super(x, y);
         this.setImageName("campfire");
-        this.range = 50;
     }
 
     public int getRange() {
-        return this.range;
+        return (int)(this.size * baseRange);
     }
 
-    public void setRange(int newRange) {
-        this.range = newRange;
+    public double getSize() {
+        return this.size;
+    }
+
+    public void addFuel(GameObject fuel) {
+        if (fuel instanceof Stick) {
+            this.size += 0.1;
+        }
+    }
+
+    public void update() {
+        //Update the fire's size every frame
+        this.size -= 1.0/(30 * 60); //Fire depletes from full in 30 seconds at 60 FPS todo
+        if (this.size <= 0) {
+            //Fire deletes itself
+            Game.world.removeItem(this);
+        }
     }
 }
