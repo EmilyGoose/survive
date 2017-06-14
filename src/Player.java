@@ -20,7 +20,6 @@ public class Player extends GameObject {
     private int yMovement = 0;
 
     public InventoryObject cursorItem;
-    private GameObject equippedTool; //TODO: Tool interface
 
     Player() {
         //Casting is somewhat redundant but I don't want to change this if WORLD_SIZE becomes odd
