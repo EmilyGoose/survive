@@ -87,8 +87,9 @@ public class Game {
             }
 
             if (Game.mouseClick && (Game.actionableObject != null)) {
+                InventoryObject cursorItem = Game.player.cursorItem;
                 //Pick up random items lying on the ground
-                if (Game.actionableObject instanceof InventoryObject && Game.player.cursorItem == null) {
+                if (Game.actionableObject instanceof InventoryObject && cursorItem == null) {
                     //Transfer the item to the cursor
                     Game.player.cursorItem = (InventoryObject)Game.actionableObject;
                     //Clear the item from the world
@@ -100,10 +101,13 @@ public class Game {
                         ) {
                     //Pick the generated resource from the item (No checks needed, returns null if empty)
                     Game.player.cursorItem = ((ResourceGenerator)Game.actionableObject).pick();
-                } else if (Game.actionableObject instanceof Player && Game.player.cursorItem instanceof Berry) {
+                } else if (Game.actionableObject instanceof Player && cursorItem instanceof Berry) {
                     //The player eats the berry and it is destroyed
                     Game.player.cursorItem = null;
                     Game.player.addFood(256); //No one questions powers of 2 when used as arbitrary numbers
+                } else if (Game.actionableObject instanceof  CampFire) {
+                    //Add the fuel to the fire and remove it from the cursor if accepted
+                    Game.player.cursorItem = ((CampFire) Game.actionableObject).addFuel(cursorItem) ? null : cursorItem;
                 }
 
             } else if (Game.mouseClick) { //Runs if mouse is not over anything but is still clicked
