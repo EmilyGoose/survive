@@ -63,8 +63,6 @@ public class GameWindow extends JFrame {
 
     static class GamePanel extends JPanel  implements KeyListener, MouseListener {
 
-        private boolean tabMenuOpen;
-
         public GamePanel() {
             this.setPreferredSize(new Dimension(1920, 1080));
         }
@@ -232,16 +230,15 @@ public class GameWindow extends JFrame {
         public void keyTyped(KeyEvent e) {}
 
         public void keyPressed(KeyEvent e) {
-            if(e.getKeyChar() == 'a' ){
+            char keyChar = e.getKeyChar();
+            if(keyChar == 'a' || keyChar == 'A'){
                 Game.player.addXMovemement(-1);
-            } else if(e.getKeyChar() == 'd' ){
+            } else if(keyChar == 'd' || keyChar == 'D'){
                 Game.player.addXMovemement(1);
-            } else if(e.getKeyChar() == 'w' ){
+            } else if(keyChar == 'w' || keyChar == 'W'){
                 Game.player.addYMovemement(-1);
-            } else if(e.getKeyChar() == 's' ){
+            } else if(keyChar == 's' || keyChar == 'S'){
                 Game.player.addYMovemement(1);
-            } else if (e.getKeyCode() == 9) { //TAB key
-                this.tabMenuOpen = !(this.tabMenuOpen); //Toggle the tab menu being open
             }
         }
 
@@ -277,10 +274,6 @@ public class GameWindow extends JFrame {
 
         public void mouseExited(java.awt.event.MouseEvent e) {
 
-        }
-
-        public boolean isTabMenuOpen() {
-            return this.tabMenuOpen;
         }
     }
 }
