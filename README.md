@@ -12,3 +12,5 @@ Click on objects to pick them up
 Click on bushes and saplings to harvest berries and sticks, respectively
 
 Click on a fire while holding a stick to add fuel
+
+Click on the campfire at the bottom of the inventory to craft a fire. Requires 4 stones and 2 sticks
