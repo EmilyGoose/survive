@@ -29,7 +29,7 @@ public class ImageLoader {
                 }
             }
         } catch (Exception E){
-            System.out.println("Image load list could not be found! Cannot proceed.");
+            System.out.println("Image load list could not be found or is not properly formatted! Cannot proceed.");
             System.exit(1);
         }
     }

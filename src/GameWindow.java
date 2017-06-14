@@ -142,6 +142,14 @@ public class GameWindow extends JFrame {
 
                 //Draw the object
                 g.drawImage(objectImage, objectX, objectY, this);
+
+                //Additional step for campfires: Draw the flame
+                if (object instanceof CampFire) {
+                    int flameSize = (int)(((CampFire) object).getSize() * 50);
+                    int flameX = objectX + objectWidth/2 - flameSize/2;
+                    int flameY = objectY + objectHeight/2 - flameSize;
+                    g.drawImage(Game.images.getImage("flame"), flameX, flameY, flameSize, flameSize, this);
+                }
             }
 
             //Draw the player (Never changes, everything is drawn relative to this)
@@ -202,7 +210,7 @@ public class GameWindow extends JFrame {
 
             //Build number
             g.setFont(Game.fonts.getFont("roboto"));
-            g.drawString("Version 0.2 WIP - Art is not final", 10, 1070);
+            g.drawString("Version 0.2", 10, 1070);
 
             //Check to see if the player is the actionable object
             if (Game.player.mouseHitbox.intersects(mouseRectangle)) {
