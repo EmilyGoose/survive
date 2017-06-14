@@ -145,7 +145,7 @@ public class GameWindow extends JFrame {
             //Draw the inventory
             //Background
             g.setColor(Color.gray);
-            g.fillRect(1840, 20, 60, 605);
+            g.fillRect(1840, 20, 60, 580);
             //Squares
             for (int box = 0; box < 10; box ++) {
                 g.setColor(Color.white);
@@ -157,6 +157,12 @@ public class GameWindow extends JFrame {
                     //Draw the object in the center of the box
                     g.drawImage(Game.images.getImage(boxObject.getImageName()), 1858, 38 + 55 * box, this);
                 }
+            }
+            //Draw the craft buttons
+            if (Game.player.inventory.canCraftFire()) {
+                g.drawImage(Game.images.getImage("firestarter"), 1845, 575, this);
+            } else {
+                g.drawImage(Game.images.getImage("firestarter_BW"), 1845, 575, this);
             }
 
             //Draw the item the player's holding in the cursor

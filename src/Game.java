@@ -15,10 +15,14 @@ public class Game {
     public static GameObject actionableObject; //Object that the mouse is over
     public static boolean mouseClick; //Whether there's a new mouse click to process
 
-    //Number of frames the game has run for
-    //At 60 FPS this game will run for almost 5 billion years before hitting the max value of 9,223,372,036,854,775,807
-    //This is the very definition of edge case
-    private static long age = 0; //With an int this game would've hit max value at just over 1 year runtime
+    /*
+      Number of frames the game has run for
+      Fun fact: At 60 FPS this game will run for almost 5 billion years before hitting the max value of 9,223,372,036,854,775,807
+      This is the very definition of edge case and I'm not accounting for it
+      Another fun fact: With an int this game would've hit max value at just over 1 year runtime
+      That's a significantly more realistic edge case so I'm accounting for it by using long over int
+    */
+    private static long age = 0;
 
     //Constants
     public static final int WORLD_SIZE = 5000; //Size the world first generates at
@@ -120,6 +124,8 @@ public class Game {
                             Game.player.inventory.putItemAtSlot(slot, Game.player.cursorItem);
                             Game.player.cursorItem = item;
                         }
+                    } else if (mouseRectangle.intersects(Game.player.inventory.getFireCraftRect()) && Game.player.inventory.canCraftFire()) {
+                        Game.player.inventory.craftFire();
                     }
                 } else if (Game.player.cursorItem != null) { //Runs if there's an item in the cursor
                     if (Game.player.cursorItem instanceof FireStarter) {
@@ -173,7 +179,16 @@ public class Game {
                 Game.player.takeDamage(2);
             }
 
-            age += 1;
+            try {
+                age = Math.addExact(age, 1);
+            } catch (ArithmeticException e) {
+                JOptionPane.showMessageDialog(gameWindow,
+                        "You've been running this game for over 5 billion years. Don't you think it's time to stop?",
+                        "Long overflow error",
+                        JOptionPane.WARNING_MESSAGE
+                );
+                System.exit(1);
+            }
 
             //This happens last to ensure we're measuring the time taken by *everything*
             gameWindow.repaint();

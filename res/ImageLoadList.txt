@@ -10,3 +10,4 @@ placeholder//placeholder.png
 stone//stone.png
 campfire//campfire.png
 firestarter//campfire_inventory.png
+firestarter_BW//campfire_inventory_BW.png
