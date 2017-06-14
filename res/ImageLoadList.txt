@@ -1,4 +1,5 @@
-player//person_placeholder.png
+player_1//steve_1.png
+player_2//steve_2.png
 tree//tree.png
 bush//bush.png
 berry//berries.png

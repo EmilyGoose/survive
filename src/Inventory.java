@@ -64,6 +64,7 @@ public class Inventory {
     public boolean canCraftFire() {
         int sticks = 0;
         int stones = 0;
+        //Count sticks and stones
         for (InventoryObject o : this.items) {
             if (o instanceof Stick) {
                 sticks += 1;
@@ -71,12 +72,14 @@ public class Inventory {
                 stones += 1;
             }
         }
+        //Check whether the player has enough to craft
         return (sticks >= 2 && stones >= 4);
     }
 
     public boolean canCraftAxe() {
         boolean stick = false;
         boolean stone = false;
+        //Check if they have one stick and one stone
         for (InventoryObject o : this.items) {
             if (o instanceof Stick) {
                 stick = true;
@@ -93,7 +96,7 @@ public class Inventory {
 
     public void setFireCraftRect(Rectangle fireCraftRect) {
         this.fireCraftRect = fireCraftRect;
-    }
+    } //TODO: Remove if unused
 
     public void craftFire() {
         if (this.canCraftFire()) {
@@ -101,6 +104,7 @@ public class Inventory {
             int sticksRemoved = 0;
             int stonesRemoved = 0;
             for (int i = 0; i < this.items.length; i++) {
+                //Remove sticks and rocks as required
                 if (this.getItemAtSlot(i, false) instanceof Stick && sticksRemoved < 2) {
                     this.getItemAtSlot(i, true);
                     sticksRemoved += 1;
@@ -109,6 +113,7 @@ public class Inventory {
                     stonesRemoved += 1;
                 }
             }
+            //Give the player the new fire
             this.addItem(new FireStarter());
         }
     }
