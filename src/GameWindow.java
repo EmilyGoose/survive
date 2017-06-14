@@ -12,8 +12,6 @@ import java.awt.event.MouseListener;
 
 public class GameWindow extends JFrame {
 
-    public boolean fireOnScreen = false;
-
     GameWindow() {
         super("Survive");
 
