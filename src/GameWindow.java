@@ -152,8 +152,14 @@ public class GameWindow extends JFrame {
                 }
             }
 
-            //Draw the player (Never changes, everything is drawn relative to this)
-            g.drawImage(Game.images.getImage(Game.player.getImageName()), 910, 390, this);
+            //Draw the player (Never changes position but can change the facing direction, everything is drawn relative to this)
+            if (Game.player.getXMovement() == -1) {
+                //Draw Steve flipped (Facing left)
+                g.drawImage(Game.images.getImage(Game.player.getImageName()), 960, 390, -50, 100, this);
+            } else {
+                //Draw Steve normally (Facing right)
+                g.drawImage(Game.images.getImage(Game.player.getImageName()), 910, 390, this);
+            }
 
             //Draw the inventory
             //Background
