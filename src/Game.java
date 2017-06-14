@@ -1,5 +1,10 @@
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 
 public class Game {
 
@@ -47,6 +52,21 @@ public class Game {
         System.out.println("Loading images...");
         images = new ImageLoader();
         System.out.println("Images loaded!");
+
+        //Load the sound
+        System.out.println("Loading sound...");
+        try {
+            File audioFile = new File("res/maintheme.wav");
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+            DataLine.Info info = new DataLine.Info(Clip.class, audioStream.getFormat());
+            Clip clip = (Clip) AudioSystem.getLine(info);
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+            clip.open(audioStream);
+            clip.start();
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Sound could not be loaded.");
+        }
 
         //Generate the new world
         System.out.println("Loading world...");
