@@ -29,7 +29,6 @@ public class Player extends GameObject {
         this.hunger = this.maxHunger;
         this.warmth = this.maxWarmth;
         this.inventory = new Inventory();
-        this.inventory.addItem(new FireStarter());
         this.mouseHitbox = new Rectangle(910, 390, 50, 100);
         this.setImageName("player_1");
     }

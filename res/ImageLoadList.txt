@@ -13,3 +13,4 @@ campfire//campfire.png
 flame//fire.png
 firestarter//campfire_inventory.png
 firestarter_BW//campfire_inventory_BW.png
+crashedplane//planecrash.png

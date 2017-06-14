@@ -38,6 +38,8 @@ public class GameWorld {
                 worldItems.add(new Stone((int)(Math.random() * size), (int)(Math.random() * size)));
             }
         }
+
+        worldItems.add(new PlaneCrash(size/2, size/2));
     }
 
     public GameObject getItemAtIndex(int i) {

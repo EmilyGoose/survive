@@ -11,7 +11,6 @@ public class Game {
     public static Player player;
     public static GameWorld world;
     public static ImageLoader images;
-    public static FontLoader fonts;
     public static GameObject actionableObject; //Object that the mouse is over
     public static boolean mouseClick; //Whether there's a new mouse click to process
 
@@ -48,11 +47,6 @@ public class Game {
         System.out.println("Loading images...");
         images = new ImageLoader();
         System.out.println("Images loaded!");
-
-        //Load the fonts
-        System.out.println("Loading fonts...");
-        fonts = new FontLoader();
-        System.out.println("Fonts loaded!");
 
         //Generate the new world
         System.out.println("Loading world...");
@@ -203,7 +197,7 @@ public class Game {
                 age = Math.addExact(age, 1);
             } catch (ArithmeticException e) {
                 JOptionPane.showMessageDialog(gameWindow,
-                        "You've been running this game for over 5 billion years. Don't you think it's time to stop?",
+                        "You've been running this game for almost 5 billion years. Don't you think it's time to stop?",
                         "Long overflow error",
                         JOptionPane.WARNING_MESSAGE
                 );

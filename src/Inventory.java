@@ -94,10 +94,6 @@ public class Inventory {
         return fireCraftRect;
     }
 
-    public void setFireCraftRect(Rectangle fireCraftRect) {
-        this.fireCraftRect = fireCraftRect;
-    } //TODO: Remove if unused
-
     public void craftFire() {
         if (this.canCraftFire()) {
             //Remove 2 sticks and 4 rocks
